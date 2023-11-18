@@ -16,6 +16,8 @@ output:
 
 # Introduction
 
+## biocViews
+
 The [biocViews](https://bioconductor.org/packages/biocViews) package
 collects and organizes terms for tagging
 resources in the Bioconductor ecosystem for
@@ -27,3 +29,65 @@ members assign tags from this vocabulary to software
 packages, data resources, and workflows that are managed
 and distributed by the project.
 
+[BiocPkgTools](https://bioconductor.org/package/BiocPkgTools) is 
+a package managing functions that interrogate aspects of the
+ecosystem.  We obtain a table of all software packages and
+examine the views:
+
+```{r do1,message=FALSE}
+library(BiocPkgTools)
+bl = biocPkgList(repo="BioCsoft")
+library(dplyr)
+s1 = bl |> select(Package, biocViews)
+s1$tags = sapply(s1$biocViews, paste, collapse=":")
+s1 = s1 |> select(Package, tags)
+set.seed(1234)
+s1[sample(seq_len(nrow(s1)), 10),]
+```
+
+## EDAM
+
+At edamontology.org, EDAM is described as "a comprehensive ontology of well-established, familiar concepts that are prevalent within bioscientific data analysis and data management (including computational biology, bioinformatics, and bioimage informatics). EDAM includes topics, operations, types of data and data identifiers, and data formats, relevant in data analysis and data management in life sciences."  
+
+With a devel version of ontoProc, we ingest and sample from the
+EDAM ontology:
+```{r lkon, message=FALSE}
+library(ontoProc)
+epath = owl2cache(url="https://edamontology.org/EDAM_1.25.owl")
+edam = setup_entities(epath)
+set.seed(1234)
+sample(labels(edam), 15)
+```
+The main organizing categories in EDAM are "data", "format", "operation" and
+"topic".
+
+# A preliminary comparison of the vocabularies
+
+The Pypi package [text2term](https://pypi.org/project/text2term/) was
+used to measure similarity between terms available in EDAM and terms
+of biocViews.  The [biocEDAM package](https://github.com/vjcitn/biocEDAM)
+includes a table of results, that we filter here for scores
+exceeding 0.8.
+
+```{r lkcomp, message=FALSE}
+library(biocEDAM)
+data(allmap)
+ndf = allmap |> filter(`Mapping Score`>.8) |> select(`Source Term`, 
+              `Mapped Term Label`, `Mapping Score`) |> as.data.frame()
+library(DT)
+datatable(ndf)
+```
+
+Similar programming can be used to examine biocViews terms
+with low maximum scores when matched against EDAM.  These
+could indicate vocabulary gaps to be filled in EDAM, or
+could suggest alternative tagging methodology.
+
+For example, biocViews includes "ExomeSeq".  This
+achieved scores of .70, .50, .39 for EDAM terms
+Exome sequencing, Exome assembly, and "geneseq" respectively.  There are
+9 software packages in Bioconductor 3.18 annotated to ExomeSeq.
+Dissection of their contents and additional views terms
+will be helpful for understanding the process needed to bridge
+EDAM to Bioconductor for improved discoverability of
+packages and data.
