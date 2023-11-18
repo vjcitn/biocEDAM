@@ -14,4 +14,7 @@ software and data packages and workflows.
 
 ### bvbrowse
 
+This function starts a shiny app that presents term-filtered sets of packages
+and their views annotation.
+
 ![](https://github.com/vjcitn/biocEDAM/blob/main/BrowseGeneSig.png?raw=true)
