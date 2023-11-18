@@ -20,3 +20,4 @@ The [biocViews](https://bioconductor.org/packages/biocViews) package
 collects and organizing terms for tagging
 resources in the Bioconductor ecosystem for
 genomic data science.
+
