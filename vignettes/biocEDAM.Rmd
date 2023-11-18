@@ -17,7 +17,13 @@ output:
 # Introduction
 
 The [biocViews](https://bioconductor.org/packages/biocViews) package
-collects and organizing terms for tagging
+collects and organizes terms for tagging
 resources in the Bioconductor ecosystem for
-genomic data science.
+genomic data science.  As of November 2023 there
+are 497 terms defining classes of resources in the
+project.  Example terms are "Organism", "BiologicalQuestion",
+"Sequencing", "MicroarrayData".  Contributors and core
+members assign tags from this vocabulary to software
+packages, data resources, and workflows that are managed
+and distributed by the project.
 
