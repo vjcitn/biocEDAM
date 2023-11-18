@@ -1,0 +1,22 @@
+---
+title: "biocEDAM: ontology for a genomic data science ecosystem"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{biocEDAM: ontology for a genomic data science ecosystem}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Introduction
+
+The [biocViews](https://bioconductor.org/packages/biocViews) package
+collects and organizing terms for tagging
+resources in the Bioconductor ecosystem for
+genomic data science.
