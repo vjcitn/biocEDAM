@@ -78,6 +78,7 @@ toptags = c(BioCsoft = "Software",
   output$lev3 = renderUI({
    validate(need(length(input$top)>0, "waiting"))
    tmp = nv[el[[ input$top ]]$edges]
+   validate(need(length(tmp)>0, "select another category, no packages"))
    checkboxGroupInput("lev2", input$top, tmp,
      inline=TRUE, selected = tmp[seq_len(min(c(length(tmp),4)))])
   })
