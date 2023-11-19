@@ -4,10 +4,7 @@
 \alias{bvbrowse}
 \title{interactive exploration of biocViews in relation to packages}
 \usage{
-bvbrowse(...)
-}
-\arguments{
-\item{\dots}{passed to biocPkgList}
+bvbrowse()
 }
 \description{
 interactive exploration of biocViews in relation to packages
