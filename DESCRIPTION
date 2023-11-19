@@ -16,7 +16,7 @@ Description: This package supports the investigation of biocViews
 	Harvard Center for Computational Biomedicine.
 License: Artistic-2.0
 Encoding: UTF-8
-Depends: R (>= 4.1), reticulate, biocViews
+Depends: R (>= 4.1), biocViews
 Suggests: knitr, testthat, BiocStyle, ontoProc
 Imports: graph, shiny, BiocPkgTools
 VignetteBuilder: knitr
