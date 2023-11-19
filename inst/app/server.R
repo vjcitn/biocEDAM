@@ -67,6 +67,11 @@ toptags = c(BioCsoft = "Software",
    checkboxGroupInput("lev2", input$subtype, tmp,
      inline=TRUE, selected = tmp[seq_len(min(c(length(tmp),4)))])
   })
+ 
+  output$edamtable = DT::renderDataTable({
+    data("allmap", package="biocEDAM")
+    DT::datatable(allmap)
+    })
   observeEvent(input$stopit, {
     stopApp(NULL)
   })

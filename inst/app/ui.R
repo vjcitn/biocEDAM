@@ -39,8 +39,13 @@ toptags = c(BioCsoft = "Software",
   mainPanel(
    tabsetPanel(
     tabPanel("Packages", uiOutput("lev3"), DT::dataTableOutput("sub1")),
+    tabPanel("views2EDAM", DT::dataTableOutput("edamtable")),
     tabPanel("About",
      helpText("This package is in an early developmental stage."),
+     helpText("The Packages tab is built using output of
+BiocPkgTools::biocPkgList along with biocViewsVocab from biocViews."),
+     helpText("The views2EDAM tab is built using text2term by
+Rafael Goncalves of Harvard Medical School."),
      verbatimTextOutput("desc")
      )
     )
