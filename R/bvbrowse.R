@@ -33,13 +33,20 @@ toptags = c(BioCsoft = "Software",
    ),
   mainPanel(
    tabsetPanel(
-    tabPanel("Packages", uiOutput("lev3"), DT::dataTableOutput("sub1"))
+    tabPanel("Packages", uiOutput("lev3"), DT::dataTableOutput("sub1")),
+    tabPanel("About",
+     helpText("This package is in an early developmental stage."),
+     verbatimTextOutput("desc")
+     )
     )
    )
   )
  )
 
  server = function(input, output) {
+  output$desc = renderPrint({
+   packageDescription("biocEDAM")
+  })
   setupDF = reactive({
   # build a mapping from views to package names
    pl = BiocPkgTools::biocPkgList(repo=input$type)  # tibble, biocViews field is a list
