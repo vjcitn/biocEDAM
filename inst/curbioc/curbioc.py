@@ -1,3 +1,4 @@
+# curbioc.py
 # based on Anh Nguyet Vu github.com/anngvu/bioc-curation
 # Vince Carey stripped out notebook components to expose functions for
 # calling from R via reticulate
@@ -11,6 +12,28 @@ from jsonschema import validate, ValidationError
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 MODEL="gpt-4o"
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
+# This segment prepares EDAM-oriented schemas
+
+# EDAM data still needs post-AI processing to merge in class ids using a reference file before it is truly valid
+references = {
+    'topic' : 'https://raw.githubusercontent.com/anngvu/bioc-curation/refs/heads/main/subsets/edam_topics.json',
+    'operation' : 'https://raw.githubusercontent.com/anngvu/bioc-curation/refs/heads/main/subsets/edam_operations.json',
+    'data': 'https://raw.githubusercontent.com/anngvu/bioc-curation/refs/heads/main/subsets/edam_data.json',
+    'format': 'https://raw.githubusercontent.com/anngvu/bioc-curation/refs/heads/main/subsets/edam_formats.json'
+}
+
+loaded_reference = {}
+
+# Load each reference file into the dictionary
+for subset, url in references.items():
+    response = json.loads(requests.get(url).text)
+    terms = next(iter(response.values()))
+    loaded_reference[subset] = {item['lbl']: item['id'] for item in terms}
+
+# end of schema reference processing
+
+# Basic python functions from Anh:
 
 def get_text_from_url(url):
   try:
@@ -47,7 +70,6 @@ def fix_completion(content, error):
   return(completion)
 
 def validate_json_with_retries(json_string, schema, max_retries=3, attempts=0):
-    
     if attempts > max_retries:
         raise Exception(f"Failed to validate JSON after {max_retries} attempts")
     try:
@@ -57,7 +79,6 @@ def validate_json_with_retries(json_string, schema, max_retries=3, attempts=0):
         # Both JSON parsing and validation succeeded
         print("Success after", attempts, "attempts")
         return parsed_json
-        
     except (json.JSONDecodeError, ValidationError) as e:
         attempts += 1
         print("JSON not valid, trying QC/correction prompt, attempt", attempts)
