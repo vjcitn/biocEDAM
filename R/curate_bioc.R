@@ -9,10 +9,14 @@
 #' @param devurl character(1) a URL for doc originating from the developer
 #' @return two python dicts, base_final and edam_processed
 #' @examples
-#' lk = curate_bioc()
-#' str(lk)
+#' if (interactive()) {
+#'   key = Sys.getenv("OPENAI_API_KEY")
+#'   if (nchar(key)==0) stop("need to have OPENAI_API_KEY set")
+#'   lk = curate_bioc()
+#'   str(lk)
+#' }
 #' @export
-curate_bioc = function(packageName="chromVar",
+curate_bioc = function(packageName="chromVAR",
      devurl = "https://raw.githubusercontent.com/GreenleafLab/chromVAR/refs/heads/master/README.md") {
    requireNamespace("reticulate")
    os = reticulate::import("os")
@@ -34,7 +38,7 @@ curate_bioc = function(packageName="chromVar",
    baseurl = sprintf("https://bioconductor.org/packages/release/bioc/html/%s.html", packageName)
    base_content = curbioc$get_text_from_url(baseurl)
    
-   edam_content = curbioc$get_text_from_url(devurl)
+   edam_content = curbioc$get_text_from_url(devurl, trim=TRUE)
    
    #
    ## Retrieve schemas

@@ -35,11 +35,16 @@ for subset, url in references.items():
 
 # Basic python functions from Anh:
 
-def get_text_from_url(url):
+def get_text_from_url(url, trim=False):  # some developer files need trimming
   try:
     response = requests.get(url)
     response.raise_for_status()
-    return response.text
+    tmp = response.text
+    #print(len(tmp))
+    if (len(tmp)>30000) & trim: 
+      tmp = tmp[0:30000:1]  # rate limiting
+    #print(len(tmp))
+    return tmp
   except requests.exceptions.RequestException as e:
     print(f"Error fetching URL: {e}")
     return None

@@ -6,7 +6,7 @@
 Bioconductor packages, targeting EDAM ontology and bio.tools schema}
 \usage{
 curate_bioc(
-  packageName = "chromVar",
+  packageName = "chromVAR",
   devurl =
     "https://raw.githubusercontent.com/GreenleafLab/chromVAR/refs/heads/master/README.md"
 )
@@ -24,6 +24,10 @@ use Anh Vu's OpenAI prompting to develop structured metadata about
 Bioconductor packages, targeting EDAM ontology and bio.tools schema
 }
 \examples{
-lk = curate_bioc()
-str(lk)
+if (interactive()) {
+  key = Sys.getenv("OPENAI_API_KEY")
+  if (nchar(key)==0) stop("need to have OPENAI_API_KEY set")
+  lk = curate_bioc()
+  str(lk)
+}
 }

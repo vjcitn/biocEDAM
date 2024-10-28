@@ -1,0 +1,58 @@
+---
+title: "Curation of Bioconductor package metadata, targeting EDAM ontology and ELIXIR bio.tools metadata schemas"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Curation of Bioconductor package metadata, targeting EDAM ontology and ELIXIR bio.tools metadata schemas}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Introduction
+
+This vignette is derived almost entirely from collaborative
+code supplied by Anh Nguyet Vu of Sage Bionetworks.  The purpose
+is to illustrate usage of OpenAPI transformation to
+provide systematic organization and tagging of content
+available for Bioconductor packages.
+
+# Example 1: chromVAR
+
+```{r doone, message=FALSE}
+library(biocEDAM)
+library(listviewer)
+library(reticulate)
+docv = curate_bioc()
+```
+The curation step uses an OpenAI API key.
+The curated view of the chromVAR landing page
+at bioconductor.org is:
+
+```{r lookbase}
+jsonedit(py_to_r(docv[[1]]))
+```
+
+The README of the chromVAR github repo provides
+additional metadata.
+
+```{r lkdev}
+jsonedit(py_to_r(docv[[2]]))
+```
+
+These can be "merged" for a richer metadata artifact.
+
+# Example 2: DESeq2
+
+```{r lknxt}
+dotx = curate_bioc(
+ "tximport", 
+ devurl = "https://raw.githubusercontent.com/thelovelab/tximport/refs/heads/devel/vignettes/tximport.Rmd")
+full = c(py_to_r(dotx[[1]]), py_to_r(dotx[[2]]))
+jsonedit(full)
+```
