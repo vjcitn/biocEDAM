@@ -1,6 +1,12 @@
 # biocEDAM
 preliminary investigation of biocViews in relation to EDAM ontology
 
+## Installation issues
+
+- the curate.Rmd vignette requires that the requests, json, jsonschema and openai python modules can be imported using reticulate
+    - check `reticulate::py_config()` to see where to run pip to install these
+- use `BiocManager::install('vjcitn/biocEDAM')` to install this package
+
 ## Purpose
 
 [biocViews](https://bioconductor.org/packages/biocViews) is an ad hoc vocabulary in

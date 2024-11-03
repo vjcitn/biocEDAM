@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">biocEDAM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.4</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,6 +56,15 @@
 <div class="page-header"><h1 id="biocedam">biocEDAM<a class="anchor" aria-label="anchor" href="#biocedam"></a>
 </h1></div>
 <p>preliminary investigation of biocViews in relation to EDAM ontology</p>
+<div class="section level2">
+<h2 id="installation-issues">Installation issues<a class="anchor" aria-label="anchor" href="#installation-issues"></a>
+</h2>
+<ul>
+<li>the curate.Rmd vignette requires that the requests, json, jsonschema and openai python modules can be imported using reticulate<ul><li>check <code><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">reticulate::py_config()</a></code> to see where to run pip to install these</li></ul>
+</li>
+<li>use <code>BiocManager::install('vjcitn/biocEDAM')</code> to install this package</li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
 </h2>

@@ -9,3 +9,6 @@ bvbrowse()
 \description{
 interactive exploration of biocViews in relation to packages
 }
+\note{
+Was made consistent with inst/app code on 3 Nov 2024.
+}

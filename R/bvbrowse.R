@@ -2,22 +2,17 @@
 #' @import shiny
 #' @import graph
 #' @import BiocPkgTools
+#' @note Was made consistent with inst/app code on 3 Nov 2024.
 #' @export
 bvbrowse = function() {
-# will only work for software in this state
-# library(biocViews)
-# library(shiny)
-# library(graph)
-# library(BiocPkgTools)
-
-#
 
  data("biocViewsVocab", package="biocViews")
+ data("vlist", package="biocEDAM") # avoid web access
  bv = biocViewsVocab
  el = graph::edgeL(bv)
  nv = graph::nodes(bv)
 
-toptags = c(BioCsoft = "Software", 
+ toptags = c(BioCsoft = "Software", 
   BioCann = "AnnotationData", BioCexp = "ExperimentData", 
   BioCworkflows = "Workflow")
 
@@ -35,8 +30,13 @@ toptags = c(BioCsoft = "Software",
   mainPanel(
    tabsetPanel(
     tabPanel("Packages", uiOutput("lev3"), DT::dataTableOutput("sub1")),
+    tabPanel("views2EDAM", DT::dataTableOutput("edamtable")),
     tabPanel("About",
      helpText("This package is in an early developmental stage."),
+     helpText("The Packages tab is built using output of
+BiocPkgTools::biocPkgList along with biocViewsVocab from biocViews."),
+     helpText("The views2EDAM tab is built using text2term by
+Rafael Goncalves of Harvard Medical School."),
      verbatimTextOutput("desc")
      )
     )
@@ -44,47 +44,13 @@ toptags = c(BioCsoft = "Software",
   )
  )
 
-
-runApp(list(ui=ui, server=bvserver))
-}
-  
-   
-
-#' interactive exploration of biocViews in relation to packages
-#' @import shiny
-#' @import graph
-#' @import BiocPkgTools
-#' @export
-#bvbrowse = function() {
-# will only work for software in this state
-# library(biocViews)
-# library(shiny)
-# library(graph)
-# library(BiocPkgTools)
-
-#
-
-
-
-
-
-bvserver = function(input, output) {
- data("biocViewsVocab", package="biocViews")
- bv = biocViewsVocab
- el = graph::edgeL(bv)
- nv = graph::nodes(bv)
-
- toptags = c(BioCsoft = "Software", 
-   BioCann = "AnnotationData", BioCexp = "ExperimentData", 
-   BioCworkflows = "Workflow")
-
+ server = function(input, output) {
   output$desc = renderPrint({
    packageDescription("biocEDAM")
   })
   setupDF = reactive({
   # build a mapping from views to package names
    #pl = BiocPkgTools::biocPkgList(repo=input$type)  # tibble, biocViews field is a list
-   data("vlist", package="biocEDAM")  # FIXME later generalize to pksByViews
    pl = vlist[[ input$type ]]
    pl$tags = sapply(pl$biocViews, paste, collapse=":")
    vl = pl$biocViews
@@ -119,8 +85,16 @@ bvserver = function(input, output) {
    checkboxGroupInput("lev2", input$subtype, tmp,
      inline=TRUE, selected = tmp[seq_len(min(c(length(tmp),4)))])
   })
+ 
+  output$edamtable = DT::renderDataTable({
+    data("allmap", package="biocEDAM")
+    DT::datatable(allmap)
+    })
   observeEvent(input$stopit, {
     stopApp(NULL)
   })
+ }
+shiny::runApp(list(ui=ui, server=server))
 }
+
 
