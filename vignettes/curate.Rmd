@@ -29,6 +29,9 @@ library(biocEDAM)
 library(listviewer)
 library(reticulate)
 docv = curate_bioc()
+if (!(length(py_to_r(docv$base_final))==18)) docv = curate_bioc() # retry
+if (!(length(py_to_r(docv$edam_processed))==2)) docv = curate_bioc()
+if (!(length(py_to_r(docv$edam_processed))==2)) stop("curate_bioc failing on retry")
 ```
 The curation step uses an OpenAI API key.
 The curated view of the chromVAR landing page
@@ -47,7 +50,7 @@ jsonedit(py_to_r(docv[[2]]))
 
 These can be "merged" for a richer metadata artifact.
 
-# Example 2: DESeq2
+# Example 2: tximport
 
 ```{r lknxt}
 dotx = curate_bioc(
