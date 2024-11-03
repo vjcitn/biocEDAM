@@ -3,8 +3,9 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   biocEDAM: biocEDAM.html
+  biotools: biotools.html
   curate: curate.html
-last_built: 2024-11-03T10:40Z
+last_built: 2024-11-03T12:58Z
 urls:
   reference: https://github.com/vjcitn/biocEDAM/reference
   article: https://github.com/vjcitn/biocEDAM/articles

@@ -1,0 +1,31 @@
+---
+title: "Examining biotools tagging of Bioconductor packages"
+author: "Vincent J. Carey, stvjc at channing.harvard.edu"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+vignette: >
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteIndexEntry{Examining biotools tagging of Bioconductor packages}
+  %\VignetteEncoding{UTF-8}
+output:
+  BiocStyle::html_document:
+    highlight: pygments
+    number_sections: yes
+    theme: united
+    toc: yes
+---
+
+# Introduction
+
+Inspired by Herve Menager's [issue](https://github.com/vjcitn/biocEDAM/issues/1), I examined
+the [ELIXIR Research Software Ecosystem](https://research-software-ecosystem.github.io/)
+source repo for [metadata on biotools components](https://github.com/research-software-ecosystem/content/tree/master/data).
+Information here was filtered using code in the inst/scrapes folder of the biocEDAM package.
+
+# A table with EDAM topics for the Bioconductor packages in biotools metadata
+
+```{r lktab, message=FALSE}
+library(DT)
+library(biocEDAM)
+data(biotools_bioc)
+datatable(biotools_bioc)
+```
