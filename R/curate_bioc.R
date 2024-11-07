@@ -8,6 +8,7 @@
 #' @param packageName character(1) a Bioconductor software package name, its release landing page will be scraped
 #' @param devurl character(1) a URL for doc originating from the developer
 #' @return two python dicts, base_final and edam_processed
+#' @note Schema completion is done with temperature set to 0.0; see edamize function for more flexibility.
 #' @examples
 #' if (interactive()) {
 #'   key = Sys.getenv("OPENAI_API_KEY")
@@ -62,14 +63,14 @@ curate_bioc = function(packageName="chromVAR",
    ## Base schema completion
    #
    
-   base_completion = curbioc$schema_completion(base_content, base_schema)
+   base_completion = curbioc$schema_completion(base_content, base_schema, temp=0.0)
    base_json = base_completion$choices[0]$message$content   # convert = FALSE -> [0] is OK
    base_final = curbioc$validate_json_with_retries(base_json, base_validation)
    
    #
    ## EDAM schema completion
    #
-   edam_completion = curbioc$schema_completion(edam_content, edam_schema)
+   edam_completion = curbioc$schema_completion(edam_content, edam_schema, temp=0.0)
    edam_json = edam_completion$choices[0]$message$content
    edam_final = curbioc$validate_json_with_retries(edam_json, edam_validation)
    

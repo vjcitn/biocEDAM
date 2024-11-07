@@ -59,3 +59,15 @@ dotx = curate_bioc(
 full = c(py_to_r(dotx[[1]]), py_to_r(dotx[[2]]))
 jsonedit(full)
 ```
+
+# Example 3: MSnbase
+
+We added a simpler function `edamize` to simply use chat completion to EDAM schema
+with input from a URL.  This allows a setting of the completion "temperature"
+parameter, which defaults to zero.  See [this doc](https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html).  `edamize` does not appear to be very robust and often returns Null in examples; work is needed.
+
+```{r lkmsn}
+nn = edamize("https://raw.githubusercontent.com/lgatto/MSnbase/refs/heads/master/vignettes/v04-benchmarking.Rmd")
+full = py_to_r(nn)
+jsonedit(full)
+```

@@ -2,6 +2,7 @@
 
 export(bvbrowse)
 export(curate_bioc)
+export(edamize)
 export(pksByViews)
 import(BiocPkgTools)
 import(graph)

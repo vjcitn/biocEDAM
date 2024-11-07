@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">biocEDAM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,7 +64,7 @@
       <h1>biocEDAM: ontology for a genomic data science ecosystem</h1>
                         <h4 data-toc-skip class="author">Vincent J. Carey, stvjc at channing.harvard.edu</h4>
             
-            <h4 data-toc-skip class="date">November 03, 2024</h4>
+            <h4 data-toc-skip class="date">November 07, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vjcitn/biocEDAM/blob/HEAD/vignettes/biocEDAM.Rmd"><code>vignettes/biocEDAM.Rmd</code></a></small>
       <div class="d-none name"><code>biocEDAM.Rmd</code></div>
@@ -90,18 +90,18 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">s1</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">s1</span><span class="op">)</span><span class="op">)</span>, <span class="fl">10</span><span class="op">)</span>,<span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 2</span></span></span>
-<span><span class="co">##    Package        tags                                                          </span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                         </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> INSPEcT        Software:Technology:Sequencing:BiologicalQuestion:Statistical…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> EnMCB          Software:WorkflowStep:AssayDomain:Technology:Microarray:Stati…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> hicVennDiagram Software:BiologicalQuestion:Technology:Sequencing:WorkflowSte…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> coMethDMR      Software:AssayDomain:ResearchField:Technology:Microarray:Biol…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> VaSP           Software:Technology:Sequencing:BiologicalQuestion:WorkflowSte…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> RCyjs          Software:WorkflowStep:StatisticalMethod:Infrastructure:Visual…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> maftools       Software:Infrastructure:Technology:Sequencing:WorkflowStep:Bi…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> CausalR        Software:ResearchField:WorkflowStep:Visualization:Statistical…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> mCSEA          Software:ResearchField:BiologicalQuestion:AssayDomain:Technol…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> tidyomics      Software:Technology:Sequencing:BiologicalQuestion:AssayDomain…</span></span></code></pre>
+<span><span class="co">##    Package               tags                                                   </span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> INPower               Software:AssayDomain:SNP                               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> enhancerHomologSearch Software:Technology:BiologicalQuestion:WorkflowStep:Se…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> HiCool                Software:Technology:Sequencing:BiologicalQuestion:Infr…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> combi                 Software:ResearchField:StatisticalMethod:Technology:Se…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> VariantTools          Software:ResearchField:AssayDomain:Technology:Genetics…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> RCy3                  Software:WorkflowStep:StatisticalMethod:Infrastructure…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> MADSEQ                Software:BiologicalQuestion:StatisticalMethod:AssayDom…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> CatsCradle            Software:AssayDomain:Technology:ResearchField:Biologic…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> mCSEA                 Software:ResearchField:BiologicalQuestion:AssayDomain:…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> tidyFlowCore          Software:Technology:SingleCell:FlowCytometry:Infrastru…</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="edam">EDAM<a class="anchor" aria-label="anchor" href="#edam"></a>

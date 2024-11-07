@@ -23,6 +23,9 @@ two python dicts, base_final and edam_processed
 use Anh Vu's OpenAI prompting to develop structured metadata about
 Bioconductor packages, targeting EDAM ontology and bio.tools schema
 }
+\note{
+Schema completion is done with temperature set to 0.0; see edamize function for more flexibility.
+}
 \examples{
 if (interactive()) {
   key = Sys.getenv("OPENAI_API_KEY")

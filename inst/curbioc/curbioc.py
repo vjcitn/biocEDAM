@@ -9,6 +9,18 @@ import os
 import json
 from jsonschema import validate, ValidationError
 
+# new 7 nov
+import pandas as pd
+import tiktoken
+
+embedding_model = "text-embedding-3-large"
+embedding_encoding = "cl100k_base" # check
+max_tokens = 8000
+
+encoding = tiktoken.get_encoding(embedding_encoding)
+
+# end new
+
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
 MODEL="gpt-4o"
 client = openai.OpenAI(api_key=OPENAI_API_KEY)
@@ -40,9 +52,13 @@ def get_text_from_url(url, trim=False):  # some developer files need trimming
     response = requests.get(url)
     response.raise_for_status()
     tmp = response.text
-    #print(len(tmp))
+# new
+#    print(len(encoding.encode(tmp)))  # actual number of tokens?
+#    print(len(tmp))
+#
+    #print(len(tmp))    # FIXME -- shoould we use the len(encode.encode(tmp)) instead of len(tmp) for test:
     if (len(tmp)>30000) & trim: 
-      tmp = tmp[0:30000:1]  # rate limiting
+      tmp = tmp[0:30000:1]  # avoid rate limiting error, could be too strict
     #print(len(tmp))
     return tmp
   except requests.exceptions.RequestException as e:
@@ -52,9 +68,10 @@ def get_text_from_url(url, trim=False):  # some developer files need trimming
 
 # Base schema completion
 
-def schema_completion(content, schema):
+def schema_completion(content, schema, temp):
   completion=client.chat.completions.create(
     model=MODEL,
+    temperature = temp,
     messages=[
       {"role": "system", "content": "You are a helpful expert in data curation and data modeling, especially with structured JSON data." + 
        "You return only valid JSON string, not in a code block, and without any other explanation so that the string and decoded and inserted into a database."},
@@ -131,3 +148,4 @@ def final_validation(merged):
     except Exception as e:
         return str(e)
     
+
