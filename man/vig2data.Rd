@@ -2,7 +2,7 @@
 % Please edit documentation in R/vig2data.R
 \name{vig2data}
 \alias{vig2data}
-\title{use the extract_data facility of ellmer to obtain summary information about an html
+\title{use the extract_data facility defined in ellmer's doc to obtain summary information about an html
 document, tailored to vignettes in bioconductor}
 \usage{
 vig2data(
@@ -22,7 +22,7 @@ vig2data(
 a list with components author, topics, focused, coherence, and persuasion
 }
 \description{
-use the extract_data facility of ellmer to obtain summary information about an html
+use the extract_data facility defined in ellmer's doc to obtain summary information about an html
 document, tailored to vignettes in bioconductor
 }
 \note{
