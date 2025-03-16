@@ -1,7 +1,7 @@
 
-#' use the extract_data facility of ellmer to obtain summary information about an html
+#' use the extract_data facility defined in ellmer's doc to obtain summary information about an html
 #' document, tailored to vignettes in bioconductor
-#' @import ellmer rvest pdftools
+#' @import rvest pdftools
 #' @param url character(1) URL for an html bioconductor vignettes
 #' @param maxnchar numeric(1) text is truncated to a substring with this length
 #' @param n_pdf_pages numeric(1) maximum number of pages to extract text from for pdf vignettes
@@ -33,7 +33,7 @@ vig2data = function(url ="https://bioconductor.org/packages/release/bioc/html/Vo
    }
  else stop("url does not point to .html or .pdf")
 
-# this defines a series of prompts and result types
+# this code, from ellmer vignette on structured data, defines a series of prompts and result types
  type_summary <- type_object(
   "Summary of the article.",
   author = type_array("Name of the article author(s)", type_string(),),
