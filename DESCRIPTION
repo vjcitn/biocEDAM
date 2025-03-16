@@ -1,7 +1,7 @@
 Package: biocEDAM
-Date: 2024-11-07
+Date: 2025-03-15
 Title: Support the investigation of biocViews in relation to EDAM ontology
-Version: 0.0.6
+Version: 0.0.7
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -10,15 +10,17 @@ Authors@R:
      )
     )
 Description: This package supports the investigation of biocViews 
-	in relation to EDAM ontology.  We measure semantic
+	in relation to EDAM ontology.  We have measured semantic
 	distance between biocViews terms and EDAM terms using
 	text2term, a python system of Rafael Goncalves of
-	Harvard Center for Computational Biomedicine.
+	Harvard Center for Computational Biomedicine.  Includes
+        python code from Anh Nguyet Vu of Sage Bionetworks.
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.1), biocViews
 Suggests: knitr, testthat, BiocStyle, ontoProc
-Imports: graph, shiny, BiocPkgTools
+Imports: graph, shiny, BiocPkgTools, rvest, pdftools, rjsoncons,
+	jsonlite
 VignetteBuilder: knitr
 biocViews: Infrastructure
 RoxygenNote: 7.3.2

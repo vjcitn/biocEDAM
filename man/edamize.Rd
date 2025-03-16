@@ -5,16 +5,12 @@
 \title{use Anh Vu's OpenAI prompting to develop structured metadata about
 Bioconductor packages, targeting EDAM ontology and bio.tools schema}
 \usage{
-edamize(
-  devurl =
-    "https://raw.githubusercontent.com/GreenleafLab/chromVAR/refs/heads/master/README.md",
-  temp = 0
-)
+edamize(content_for_edam, temp = 0)
 }
 \arguments{
-\item{devurl}{character(1) a URL for doc originating from the developer}
-
 \item{temp}{numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0}
+
+\item{devurl}{character(1) a URL for doc originating from the developer}
 }
 \value{
 two python dicts, base_final and edam_processed
@@ -27,7 +23,11 @@ Bioconductor packages, targeting EDAM ontology and bio.tools schema
 if (interactive()) {
   key = Sys.getenv("OPENAI_API_KEY")
   if (nchar(key)==0) stop("need to have OPENAI_API_KEY set")
-  lk = edamize()
-  str(lk)
+  # avoid repetitious reprocessing of tximeta vignette
+  # content = vig2data("https://bioconductor.org/packages/release/bioc/vignettes/tximeta/inst/doc/tximeta.html")
+  content = readRDS(system.file("rds/tximetaFocused.rds", package="biocEDAM"))
+  str(content)
+  lk = edamize(content$focus)
+  mkdf(lk)
 }
 }

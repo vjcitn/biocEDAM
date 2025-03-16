@@ -1,3 +1,15 @@
+#' simple utility to process output of edamize into data.frame
+#' @import rjsoncons
+#' @rawNamespace import(jsonlite, except=validate)
+#' @param x a list as produced by edamize
+#' @export
+mkdf = function (x) 
+{
+    lkj = jsonlite::toJSON(x)
+    uri = fromJSON(rjsoncons::j_query(lkj, "$..uri"))
+    tm = fromJSON(rjsoncons::j_query(lkj, "$..term"))
+    data.frame(uri, tm)
+}
 
 
 # mods to Anh Vu's code in github.com/anngvu/bioc-curation
@@ -12,12 +24,16 @@
 #' if (interactive()) {
 #'   key = Sys.getenv("OPENAI_API_KEY")
 #'   if (nchar(key)==0) stop("need to have OPENAI_API_KEY set")
-#'   lk = edamize()
-#'   str(lk)
+#'   # avoid repetitious reprocessing of tximeta vignette
+#'   # content = vig2data("https://bioconductor.org/packages/release/bioc/vignettes/tximeta/inst/doc/tximeta.html")
+#'   content = readRDS(system.file("rds/tximetaFocused.rds", package="biocEDAM"))
+#'   str(content)
+#'   lk = edamize(content$focus)
+#'   mkdf(lk)
 #' }
 #' @export
 edamize = function(
-     devurl = "https://raw.githubusercontent.com/GreenleafLab/chromVAR/refs/heads/master/README.md",
+     content_for_edam,
      temp = 0.0) {
    requireNamespace("reticulate")
    os = reticulate::import("os")
@@ -32,7 +48,8 @@ edamize = function(
    MODEL="gpt-4o"
    client = oai$OpenAI(api_key=OPENAI_API_KEY)
    
-   edam_content = curbioc$get_text_from_url(devurl, trim=TRUE)
+   #edam_content = curbioc$get_text_from_url(devurl, trim=TRUE)
+   #content_for_edam
    
    #
    ## Retrieve schemas
@@ -47,7 +64,7 @@ edamize = function(
    #
    ## EDAM schema completion
    #
-   edam_completion = curbioc$schema_completion(edam_content, edam_schema, temp=temp)
+   edam_completion = curbioc$schema_completion(content_for_edam, edam_schema, temp=temp)
    edam_json = edam_completion$choices[0]$message$content
    edam_final = curbioc$validate_json_with_retries(edam_json, edam_validation)
    
