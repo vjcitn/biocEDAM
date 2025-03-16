@@ -83,6 +83,7 @@ def schema_completion(content, schema, temp):
 # Validate and send any error to be corrected (default: max of 3 times), based on validation error
 
 def fix_completion(content, error):
+#  print(content)
   completion=client.chat.completions.create(
     model=MODEL,
     messages=[

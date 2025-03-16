@@ -32,7 +32,13 @@ mkdf = function (x)
 #'   content = readRDS(system.file("rds/tximetaFocused.rds", package="biocEDAM"))
 #'   str(content)
 #'   lk = edamize(content$focus)
-#'   mkdf(lk)
+#'   if (is.null(lk)) lk = edamize(content$focus)  # sometimes a second try is needed
+#'   print(mkdf(lk))
+#'   # try content derived from a pdf vignette
+#'   # content2 = vig2data("https://bioconductor.org/packages/release/bioc/vignettes/IRanges/inst/doc/IRangesOverview.pdf")
+#'   content2 = readRDS(system.file("rds/IRangesOVdata.rds", package="biocEDAM"))
+#'   lk2 = edamize(content2$focus)
+#'   mkdf(lk2)
 #' }
 #' @export
 edamize = function(
