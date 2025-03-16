@@ -19,6 +19,11 @@ two python dicts, base_final and edam_processed
 use Anh Vu's OpenAI prompting to develop structured metadata about
 Bioconductor packages, targeting EDAM ontology and bio.tools schema
 }
+\note{
+This function is not deterministic.  For the provided example, the input to the function
+is a fixed text, but the output at the end can be NULL, a data frame with 12 rows, or a data frame with 14 rows.
+More work is needed to achieve greater predictability.
+}
 \examples{
 if (interactive()) {
   key = Sys.getenv("OPENAI_API_KEY")
