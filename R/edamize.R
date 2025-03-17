@@ -17,7 +17,7 @@ mkdf = function (x)
 
 #' use Anh Vu's OpenAI prompting to develop structured metadata about
 #' Bioconductor packages, targeting EDAM ontology and bio.tools schema
-#' @param devurl character(1) a URL for doc originating from the developer
+#' @param content_for_edam character(1) a URL for doc originating from the developer
 #' @param temp numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0
 #' @note This function is not deterministic.  For the provided example, the input to the function
 #' is a fixed text, but the output at the end can be NULL, a data frame with 12 rows, or a data frame with 14 rows.

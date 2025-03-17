@@ -8,9 +8,9 @@ Bioconductor packages, targeting EDAM ontology and bio.tools schema}
 edamize(content_for_edam, temp = 0)
 }
 \arguments{
-\item{temp}{numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0}
+\item{content_for_edam}{character(1) a URL for doc originating from the developer}
 
-\item{devurl}{character(1) a URL for doc originating from the developer}
+\item{temp}{numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0}
 }
 \value{
 two python dicts, base_final and edam_processed
