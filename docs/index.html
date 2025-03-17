@@ -8,11 +8,11 @@
 <title>Support the investigation of biocViews in relation to EDAM ontology • biocEDAM</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Support the investigation of biocViews in relation to EDAM ontology">
-<meta name="description" content="This package supports the investigation of biocViews in relation to EDAM ontology. We measure semantic distance between biocViews terms and EDAM terms using text2term, a python system of Rafael Goncalves of Harvard Center for Computational Biomedicine.">
-<meta property="og:description" content="This package supports the investigation of biocViews in relation to EDAM ontology. We measure semantic distance between biocViews terms and EDAM terms using text2term, a python system of Rafael Goncalves of Harvard Center for Computational Biomedicine.">
+<meta name="description" content="This package supports the investigation of biocViews in relation to EDAM ontology. We have measured semantic distance between biocViews terms and EDAM terms using text2term, a python system of Rafael Goncalves of Harvard Center for Computational Biomedicine. Includes python code from Anh Nguyet Vu of Sage Bionetworks.">
+<meta property="og:description" content="This package supports the investigation of biocViews in relation to EDAM ontology. We have measured semantic distance between biocViews terms and EDAM terms using text2term, a python system of Rafael Goncalves of Harvard Center for Computational Biomedicine. Includes python code from Anh Nguyet Vu of Sage Bionetworks.">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">biocEDAM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.10</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -56,15 +56,17 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="biocedam">biocEDAM<a class="anchor" aria-label="anchor" href="#biocedam"></a>
 </h1></div>
-<p>preliminary investigation of biocViews in relation to EDAM ontology</p>
+<p>This package investigates tools that can help understand the relationship of <a href="https://bioconductor.org/packages/biocViews" class="external-link">biocViews</a> in relation to the <a href="https://edamontology.org" class="external-link">EDAM ontology</a>.</p>
 <div class="section level2">
-<h2 id="installation-issues">Installation issues<a class="anchor" aria-label="anchor" href="#installation-issues"></a>
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <ul>
-<li>the curate.Rmd vignette requires that the requests, json, jsonschema and openai python modules can be imported using reticulate<ul><li>check <code><a href="https://rstudio.github.io/reticulate/reference/py_config.html" class="external-link">reticulate::py_config()</a></code> to see where to run pip to install these</li></ul>
-</li>
-<li>use <code>BiocManager::install('vjcitn/biocEDAM')</code> to install this package</li>
+<li><p>Use <code>BiocManager::install('vjcitn/biocEDAM')</code> to install this package.</p></li>
+<li><p>The DESCRIPTION file of the package defines python requirements.</p></li>
+<li><p>When functions requiring python are called, a virtual environment will be created by reticulate to resolve references to modules in use.</p></li>
 </ul>
+<p>Note that some functions require that a valid OpenAI API key is readable through the environment variable <code>OPENAI_API_KEY</code>. When this is absent, functions will simply fail.</p>
+<p>Charges to the associated OpenAI account will accrue when these functions are called. All the experimental work underlying the development of the code in March 2025 produced charges of $1.34. You can examine your charges at <code>platform.openai.com/usage</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="purpose">Purpose<a class="anchor" aria-label="anchor" href="#purpose"></a>
@@ -74,6 +76,16 @@
 <div class="section level2">
 <h2 id="tools">Tools<a class="anchor" aria-label="anchor" href="#tools"></a>
 </h2>
+<div class="section level3">
+<h3 id="vig2data">vig2data<a class="anchor" aria-label="anchor" href="#vig2data"></a>
+</h3>
+<p>This function uses rvest, pdftools, and gpt-4o via ellmer to transform content (typically referenced via URL for Bioconductor vignettes, see examples) to structured data about authors, topics (determined <em>ad libitum</em> by GPT), and a component <code>focused</code> which is a concise summary of content up to 450 words. This component will be used in <code>edamize</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="edamize">edamize<a class="anchor" aria-label="anchor" href="#edamize"></a>
+</h3>
+<p>This function calls python code of Anh Nguyet Vu that prompts GPT to select and organize terms from EDAM on the basis of relevance to the supplied text (<code>focused</code> from <code>vig2data</code> in the intended application). Terms from the topic, operation, data, and format components of EDAM may be returned.</p>
+</div>
 <div class="section level3">
 <h3 id="bvbrowse">bvbrowse<a class="anchor" aria-label="anchor" href="#bvbrowse"></a>
 </h3>

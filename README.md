@@ -1,11 +1,28 @@
 # biocEDAM
-preliminary investigation of biocViews in relation to EDAM ontology
 
-## Installation issues
+This package investigates tools that
+can help understand the relationship
+of [biocViews](https://bioconductor.org/packages/biocViews) in relation to the 
+[EDAM ontology](https://edamontology.org).
 
-- the curate.Rmd vignette requires that the requests, json, jsonschema and openai python modules can be imported using reticulate
-    - check `reticulate::py_config()` to see where to run pip to install these
-- use `BiocManager::install('vjcitn/biocEDAM')` to install this package
+## Installation 
+
+
+- Use `BiocManager::install('vjcitn/biocEDAM')` to install this package.
+
+- The DESCRIPTION file of the package defines python requirements.
+
+- When functions requiring python are called, a virtual environment
+will be created by reticulate to resolve references to modules in use.
+
+Note that some functions require that a valid OpenAI API key is
+readable through the environment variable `OPENAI_API_KEY`.  When
+this is absent, functions will simply fail.
+
+Charges to the associated OpenAI account will accrue when these functions
+are called.  All the experimental work underlying the development of the
+code in March 2025 produced charges of $1.34.  You can examine your
+charges at `platform.openai.com/usage`.
 
 ## Purpose
 
@@ -17,6 +34,22 @@ permitting exploration that will lead to formal ontological tagging of all Bioco
 software and data packages and workflows.
 
 ## Tools
+
+### vig2data
+
+This function uses rvest, pdftools, and gpt-4o via ellmer to transform content (typically
+referenced via URL for Bioconductor vignettes, see examples) to structured
+data about authors, topics (determined _ad libitum_ by GPT), and a component
+`focused` which is a concise summary of content up to 450 words.  This component
+will be used in `edamize`.
+
+### edamize
+
+This function calls python code of Anh Nguyet Vu that prompts GPT to
+select and organize terms from EDAM on the basis of relevance to the
+supplied text (`focused` from `vig2data` in the intended application).
+Terms from the topic, operation, data, and format components of EDAM
+may be returned.
 
 ### bvbrowse
 

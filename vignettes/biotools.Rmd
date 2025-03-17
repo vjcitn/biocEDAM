@@ -20,6 +20,7 @@ Inspired by Herve Menager's [issue](https://github.com/vjcitn/biocEDAM/issues/1)
 the [ELIXIR Research Software Ecosystem](https://research-software-ecosystem.github.io/)
 source repo for [metadata on biotools components](https://github.com/research-software-ecosystem/content/tree/master/data).
 Information here was filtered using code in the inst/scrapes folder of the biocEDAM package.
+This information and the `biotools_bioc` data.frame in this package should be updated regularly.
 
 # A table with EDAM topics for the Bioconductor packages in biotools metadata
 

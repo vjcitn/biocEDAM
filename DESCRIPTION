@@ -1,7 +1,7 @@
 Package: biocEDAM
 Date: 2025-03-15
 Title: Support the investigation of biocViews in relation to EDAM ontology
-Version: 0.0.9
+Version: 0.0.10
 Authors@R: 
     c(person(
         "Vincent", "Carey", role = c("aut", "cre"),
@@ -18,9 +18,9 @@ Description: This package supports the investigation of biocViews
 License: Artistic-2.0
 Encoding: UTF-8
 Depends: R (>= 4.1), biocViews
-Suggests: knitr, testthat, BiocStyle, ontoProc
+Suggests: knitr, testthat, BiocStyle, ontoProc, DT
 Imports: graph, shiny, BiocPkgTools, rvest, pdftools, rjsoncons,
-	jsonlite
+	jsonlite, ellmer
 VignetteBuilder: knitr
 biocViews: Infrastructure
 RoxygenNote: 7.3.2

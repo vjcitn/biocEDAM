@@ -54,9 +54,12 @@ EDAM ontology:
 ```{r lkon, message=FALSE}
 library(ontoProc)
 epath = owl2cache(url="https://edamontology.org/EDAM_1.25.owl")
-edam = setup_entities(epath)
+edam = setup_entities2(epath)
 set.seed(1234)
-sample(labels(edam), 15)
+sam = sample(edam$name, 15)
+edam = names(sam)
+phr = as.character(sam)
+DT::datatable(data.frame(edam,phr))
 ```
 The main organizing categories in EDAM are "data", "format", "operation" and
 "topic".

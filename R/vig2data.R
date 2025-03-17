@@ -1,7 +1,7 @@
 
 #' use the extract_data facility defined in ellmer's doc to obtain summary information about an html
 #' document, tailored to vignettes in bioconductor
-#' @import rvest pdftools
+#' @import rvest pdftools ellmer
 #' @param url character(1) URL for an html bioconductor vignettes
 #' @param maxnchar numeric(1) text is truncated to a substring with this length
 #' @param n_pdf_pages numeric(1) maximum number of pages to extract text from for pdf vignettes

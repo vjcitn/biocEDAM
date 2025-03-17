@@ -22,52 +22,54 @@ is to illustrate usage of OpenAPI transformation to
 provide systematic organization and tagging of content
 available for Bioconductor packages.
 
-# Example 1: chromVAR
+Code in this vignette requires that `OPENAI_API_KEY` be defined.
+
+# Example 1: tximeta
+
+We start with the transformation of vignette
+content, which may be in HTML or PDF, based on the structured
+data extraction code examples given in a vignette for the
+ellmer package on CRAN.  We prompt GPT-4o to produce
+a concise and objective summary of at most 450 words,
+which is placed in the `focus` component of the returned
+data.
 
 ```{r doone, message=FALSE}
+if (nchar(Sys.getenv("OPENAI_API_KEY"))>0) {
 library(biocEDAM)
-library(listviewer)
-library(reticulate)
-docv = curate_bioc()
-if (!(length(py_to_r(docv$base_final))==18)) docv = curate_bioc() # retry
-if (!(length(py_to_r(docv$edam_processed))==2)) docv = curate_bioc()
-if (!(length(py_to_r(docv$edam_processed))==2)) stop("curate_bioc failing on retry")
-```
-The curation step uses an OpenAI API key.
-The curated view of the chromVAR landing page
-at bioconductor.org is:
-
-```{r lookbase}
-jsonedit(py_to_r(docv[[1]]))
+content = vig2data("https://bioconductor.org/packages/release/bioc/vignettes/tximeta/inst/doc/tximeta.html")
+str(content)
+nchar(content$focus)
+}
 ```
 
-The README of the chromVAR github repo provides
-additional metadata.
+We then use schema-driven inference to produce associated EDAM tags;
+see the code in `inst/curbioc` in the package source.
 
-```{r lkdev}
-jsonedit(py_to_r(docv[[2]]))
+```{r finish}
+if (nchar(Sys.getenv("OPENAI_API_KEY"))>0) {
+substr(content$focus,1,250)
+ans = edamize(content$focus)
+DT::datatable(mkdf(ans))
+}
 ```
 
-These can be "merged" for a richer metadata artifact.
 
-# Example 2: tximport
 
-```{r lknxt}
-dotx = curate_bioc(
- "tximport", 
- devurl = "https://raw.githubusercontent.com/thelovelab/tximport/refs/heads/devel/vignettes/tximport.Rmd")
-full = c(py_to_r(dotx[[1]]), py_to_r(dotx[[2]]))
-jsonedit(full)
-```
+# Example 2: MSnbase
 
-# Example 3: MSnbase
-
-We added a simpler function `edamize` to simply use chat completion to EDAM schema
-with input from a URL.  This allows a setting of the completion "temperature"
-parameter, which defaults to zero.  See [this doc](https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html).  `edamize` does not appear to be very robust and often returns Null in examples; work is needed.
 
 ```{r lkmsn}
-nn = edamize("https://raw.githubusercontent.com/lgatto/MSnbase/refs/heads/master/vignettes/v04-benchmarking.Rmd")
-full = py_to_r(nn)
-jsonedit(full)
+if (nchar(Sys.getenv("OPENAI_API_KEY"))>0) {
+mm = vig2data("https://bioconductor.org/packages/release/bioc/vignettes/MSnbase/inst/doc/v05-MSnbase-development.html")
+uu = edamize(mm$focus)
+if (is.null(uu)) uu = edamize(mm$focus)  # second try
+DT::datatable(mkdf(uu))
+}
 ```
+
+# Caveats
+
+Sometimes there is no result.  This pertains to indeterminacy in the GPT
+environment we are using.  Often a second try will get a result.  If you have
+persistent trouble, please file an issue.
