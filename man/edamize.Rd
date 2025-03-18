@@ -5,15 +5,19 @@
 \title{use Anh Vu's OpenAI prompting to develop structured metadata about
 Bioconductor packages, targeting EDAM ontology and bio.tools schema}
 \usage{
-edamize(content_for_edam, temp = 0)
+edamize(content_for_edam, temp = 0, prescrub = TRUE)
 }
 \arguments{
 \item{content_for_edam}{character(1) a URL for doc originating from the developer}
 
 \item{temp}{numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0}
+
+\item{prescrub}{logical(1) if TRUE, apply the cleantxt function to the input before trying to assign EDAM tags;
+defaults to TRUE
+effort in the python operations in inst/curbioc; defaults to 1}
 }
 \value{
-two python dicts, base_final and edam_processed
+a list with components 'topic' and 'function', which can be converted to a data.frame using `mkdf`
 }
 \description{
 use Anh Vu's OpenAI prompting to develop structured metadata about

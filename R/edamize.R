@@ -1,3 +1,11 @@
+#' utility to "clean" odd characters in text input that seem to increase risk of json-transformation failures
+#' @param x character(1) text from which non-alphabetic characters like brackets and parentheses
+#' are to be removed
+#' @note This is speculative; success rates appear to increase with no evident degradation of
+#' content interpretation.
+#' @export
+cleantxt = function(x) gsub('-|\\(|`|#|:|\\*|’|"|\\[|\\]|\\$|\\{|\\}|=|\\(|\\||")', "", x)
+
 #' simple utility to process output of edamize into data.frame
 #' @import rjsoncons
 #' @rawNamespace import(jsonlite, except=validate)
@@ -19,10 +27,13 @@ mkdf = function (x)
 #' Bioconductor packages, targeting EDAM ontology and bio.tools schema
 #' @param content_for_edam character(1) a URL for doc originating from the developer
 #' @param temp numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0
+#' @param prescrub logical(1) if TRUE, apply the cleantxt function to the input before trying to assign EDAM tags;
+#' defaults to TRUE
+#' effort in the python operations in inst/curbioc; defaults to 1
 #' @note This function is not deterministic.  For the provided example, the input to the function
 #' is a fixed text, but the output at the end can be NULL, a data frame with 12 rows, or a data frame with 14 rows.
 #' More work is needed to achieve greater predictability.
-#' @return two python dicts, base_final and edam_processed
+#' @return a list with components 'topic' and 'function', which can be converted to a data.frame using `mkdf`
 #' @examples
 #' if (interactive()) {
 #'   key = Sys.getenv("OPENAI_API_KEY")
@@ -43,7 +54,7 @@ mkdf = function (x)
 #' @export
 edamize = function(
      content_for_edam,
-     temp = 0.0) {
+     temp = 0.0, prescrub=TRUE) {
    requireNamespace("reticulate")
    os = reticulate::import("os")
    requests = reticulate::import("requests", convert=FALSE)
@@ -57,8 +68,6 @@ edamize = function(
    MODEL="gpt-4o"
    client = oai$OpenAI(api_key=OPENAI_API_KEY)
    
-   #edam_content = curbioc$get_text_from_url(devurl, trim=TRUE)
-   #content_for_edam
    
    #
    ## Retrieve schemas
@@ -73,9 +82,25 @@ edamize = function(
    #
    ## EDAM schema completion
    #
-   edam_completion = curbioc$schema_completion(content_for_edam, edam_schema, temp=temp)
+   if (prescrub) content_for_edam = cleantxt(content_for_edam)
+   edam_completion = try(curbioc$schema_completion(content_for_edam, edam_schema, temp=temp))
+
+#   retry_count = 0
+#   while (inherits(edam_completion, "try-error")) {
+#    retry_count = retry_count + 1
+#    if (retry_count > n_retries) break
+#    edam_completion = try(curbioc$schema_completion(content_for_edam, edam_schema, temp=temp))
+#    }
+     
    edam_json = edam_completion$choices[0]$message$content
-   edam_final = curbioc$validate_json_with_retries(edam_json, edam_validation)
+   edam_final = try(curbioc$validate_json_with_retries(edam_json, edam_validation))
+
+#   retry_count = 0
+#   while (inherits(edam_final, "try-error")) {
+#    retry_count = retry_count + 1
+#    if (retry_count > n_retries) break
+#    edam_final = try(curbioc$validate_json_with_retries(edam_json, edam_validation))
+#    }
    
    edam_processed = curbioc$transform_terms(edam_final)
    reticulate::py_to_r(edam_processed)
