@@ -9,7 +9,7 @@ Bioconductor packages, targeting EDAM ontology and bio.tools schema"></head><bod
 
     <a class="navbar-brand me-2" href="../index.html">biocEDAM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.11</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.12</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,7 +47,7 @@ Bioconductor packages, targeting EDAM ontology and bio.tools schema</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">edamize</span><span class="op">(</span><span class="va">content_for_edam</span>, temp <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">edamize</span><span class="op">(</span><span class="va">content_for_edam</span>, temp <span class="op">=</span> <span class="fl">0</span>, prescrub <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,10 +61,16 @@ Bioconductor packages, targeting EDAM ontology and bio.tools schema</p>
 <dt id="arg-temp">temp<a class="anchor" aria-label="anchor" href="#arg-temp"></a></dt>
 <dd><p>numeric(1) temperature setting for openAI chat, see `https://gptcache.readthedocs.io/en/latest/bootcamp/temperature/chat.html`, defaults to 0.0</p></dd>
 
+
+<dt id="arg-prescrub">prescrub<a class="anchor" aria-label="anchor" href="#arg-prescrub"></a></dt>
+<dd><p>logical(1) if TRUE, apply the cleantxt function to the input before trying to assign EDAM tags;
+defaults to TRUE
+effort in the python operations in inst/curbioc; defaults to 1</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>two python dicts, base_final and edam_processed</p>
+    <p>a list with components 'topic' and 'function', which can be converted to a data.frame using `mkdf`</p>
     </div>
     <div class="section level2">
     <h2 id="note">Note<a class="anchor" aria-label="anchor" href="#note"></a></h2>
@@ -98,7 +104,7 @@ More work is needed to achieve greater predictability.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Vincent Carey.</p>
+  <p>Developed by Vincent Carey, Anh Nguyet Vu.</p>
 </div>
 
 <div class="pkgdown-footer-right">
