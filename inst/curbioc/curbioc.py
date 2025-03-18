@@ -74,7 +74,7 @@ def schema_completion(content, schema, temp):
     temperature = temp,
     messages=[
       {"role": "system", "content": "You are a helpful expert in data curation and data modeling, especially with structured JSON data." + 
-       "You return only valid JSON string, not in a code block, and without any other explanation so that the string can be decoded and inserted into a database."},
+       "You return only valid JSON string, not in a code block, and without any other explanation so that the string and decoded and inserted into a database."},
       {"role": "user", "content": "Given content about a bioformatics tool, represent it as a JSON object compliant with the provided schema:" +
        "\nCONTENT:\n\n" + content + '\nSCHEMA:\n\n' + schema}]
   )
