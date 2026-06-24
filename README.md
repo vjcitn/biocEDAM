@@ -1,9 +1,19 @@
 # biocEDAM
 
-This package investigates tools that
-can help understand the relationship
-of [biocViews](https://bioconductor.org/packages/biocViews) in relation to the 
-[EDAM ontology](https://edamontology.org).
+This package aims to improve the tagging of Bioconductor packages
+through use of formal ontology.
+Currently packages are labeled using
+[biocViews](https://bioconductor.org/packages/biocViews).
+We aim to use the 
+[EDAM ontology](https://edamontology.org) to improve discoverability
+of packages and functions.
+
+## tl;dr
+
+- `library(biocEDAM)`
+- `example(vig2data)` (produces `tst`)
+- `edamize(tst$focused)` (produces EDAM term table relevant to a Voyager vignette)
+- `example(edamize)` (produces table relevant to tximeta)
 
 ## Installation 
 
@@ -15,14 +25,13 @@ of [biocViews](https://bioconductor.org/packages/biocViews) in relation to the
 - When functions requiring python are called, a virtual environment
 will be created by reticulate to resolve references to modules in use.
 
-Note that some functions require that a valid OpenAI API key is
-readable through the environment variable `OPENAI_API_KEY`.  When
+Note that some functions require that a valid API key for an LLM provider is
+readable through an environment variable.  When
 this is absent, functions will simply fail.
 
-Charges to the associated OpenAI account will accrue when these functions
+Charges to the associated account (Anthropic API, by default) will accrue when these functions
 are called.  All the experimental work underlying the development of the
-code in March 2025 produced charges of $1.34.  You can examine your
-charges at `platform.openai.com/usage`.
+code in March 2025 produced charges of $1.34.
 
 ## Purpose
 
@@ -37,19 +46,22 @@ software and data packages and workflows.
 
 ### vig2data
 
-This function uses rvest, pdftools, and gpt-4o via ellmer to transform content (typically
+This function uses rvest, pdftools, and a selected LLM via ellmer to transform content (typically
 referenced via URL for Bioconductor vignettes, see examples) to structured
-data about authors, topics (determined _ad libitum_ by GPT), and a component
-`focused` which is a concise summary of content up to 450 words.  This component
-will be used in `edamize`.
+data about authors, topics (determined _ad libitum_ by LLLM), and a component
+`focused` which is a concise summary of the resource.  This component
+can be used in the `edamize` function.
 
 ### edamize
 
-This function calls python code of Anh Nguyet Vu that prompts GPT to
+This function, by default, prompts the selected LLM to find EDAM terms
+relevant to any free text string.
+
+(This function was inspired by python code of Anh Nguyet Vu that prompted GPT to
 select and organize terms from EDAM on the basis of relevance to the
 supplied text (`focused` from `vig2data` in the intended application).
 Terms from the topic, operation, data, and format components of EDAM
-may be returned.
+may be returned.)
 
 ### bvbrowse
 

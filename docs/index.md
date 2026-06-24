@@ -4,9 +4,23 @@
 
 <div class="section level1">
 
-This package investigates tools that can help understand the
-relationship of [biocViews](https://bioconductor.org/packages/biocViews)
-in relation to the [EDAM ontology](https://edamontology.org).
+This package aims to improve the tagging of Bioconductor packages
+through use of formal ontology. Currently packages are labeled using
+[biocViews](https://bioconductor.org/packages/biocViews). We aim to use
+the [EDAM ontology](https://edamontology.org) to improve discoverability
+of packages and functions.
+
+<div class="section level2">
+
+## tl;dr
+
+-   `library(biocEDAM)`
+-   `example(vig2data)` (produces `tst`)
+-   `edamize(tst$focused)` (produces EDAM term table relevant to a
+    Voyager vignette)
+-   `example(edamize)` (produces table relevant to tximeta)
+
+</div>
 
 <div class="section level2">
 
@@ -66,11 +80,14 @@ of content up to 450 words. This component will be used in `edamize`.
 
 ### edamize
 
-This function calls python code of Anh Nguyet Vu that prompts GPT to
-select and organize terms from EDAM on the basis of relevance to the
-supplied text (`focused` from `vig2data` in the intended application).
-Terms from the topic, operation, data, and format components of EDAM may
-be returned.
+This function, by default, prompts the selected LLM to find EDAM terms
+relevant to any free text string.
+
+(This function was inspired by python code of Anh Nguyet Vu that
+prompted GPT to select and organize terms from EDAM on the basis of
+relevance to the supplied text (`focused` from `vig2data` in the
+intended application). Terms from the topic, operation, data, and format
+components of EDAM may be returned.)
 
 </div>
 

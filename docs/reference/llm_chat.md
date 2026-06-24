@@ -15,7 +15,7 @@ Create an ellmer chat object for a given LLM provider
 <div class="sourceCode">
 
 ``` r
-llm_chat(provider = "openai", model, ...)
+llm_chat(provider = "anthropic", model, ...)
 ```
 
 </div>
@@ -52,9 +52,7 @@ an ellmer Chat object
 
 ## Note
 
-The `model` default in calling functions is typically an OpenAI model
-name. When using a different provider, supply an appropriate model name
-for that provider.
+Supply a model name appropriate for the chosen provider.
 
 </div>
 

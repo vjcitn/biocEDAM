@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Support the investigation of biocViews in relation to EDAM ontology • biocEDAM</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Support the investigation of biocViews in relation to EDAM ontology">
 <meta name="description" content="This package supports the investigation of biocViews in relation to EDAM ontology. We have measured semantic distance between biocViews terms and EDAM terms using text2term, a python system of Rafael Goncalves of Harvard Center for Computational Biomedicine. Includes python code from Anh Nguyet Vu of Sage Bionetworks.">
@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">biocEDAM</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.6</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.23</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,6 +38,7 @@
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/biotools.html">Examining biotools tagging of Bioconductor packages</a></li>
     <li><a class="dropdown-item" href="articles/curate.html">Curation of Bioconductor package metadata, targeting EDAM ontology and ELIXIR bio.tools metadata schemas</a></li>
+    <li><a class="dropdown-item" href="articles/map_concepts.html">Mapping free text to ontology terms with map_concepts</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="news/index.html">Changelog</a></li>
@@ -57,7 +58,20 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="biocedam">biocEDAM<a class="anchor" aria-label="anchor" href="#biocedam"></a>
 </h1></div>
-<p>This package investigates tools that can help understand the relationship of <a href="https://bioconductor.org/packages/biocViews" class="external-link">biocViews</a> in relation to the <a href="https://edamontology.org" class="external-link">EDAM ontology</a>.</p>
+<p>This package aims to improve the tagging of Bioconductor packages through use of formal ontology. Currently packages are labeled using <a href="https://bioconductor.org/packages/biocViews" class="external-link">biocViews</a>. We aim to use the <a href="https://edamontology.org" class="external-link">EDAM ontology</a> to improve discoverability of packages and functions.</p>
+<div class="section level2">
+<h2 id="tldr">tl;dr<a class="anchor" aria-label="anchor" href="#tldr"></a>
+</h2>
+<ul>
+<li><code><a href="https://github.com/vjcitn/biocEDAM">library(biocEDAM)</a></code></li>
+<li>
+<code>example(vig2data)</code> (produces <code>tst</code>)</li>
+<li>
+<code>edamize(tst$focused)</code> (produces EDAM term table relevant to a Voyager vignette)</li>
+<li>
+<code>example(edamize)</code> (produces table relevant to tximeta)</li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -85,7 +99,8 @@
 <div class="section level3">
 <h3 id="edamize">edamize<a class="anchor" aria-label="anchor" href="#edamize"></a>
 </h3>
-<p>This function calls python code of Anh Nguyet Vu that prompts GPT to select and organize terms from EDAM on the basis of relevance to the supplied text (<code>focused</code> from <code>vig2data</code> in the intended application). Terms from the topic, operation, data, and format components of EDAM may be returned.</p>
+<p>This function, by default, prompts the selected LLM to find EDAM terms relevant to any free text string.</p>
+<p>(This function was inspired by python code of Anh Nguyet Vu that prompted GPT to select and organize terms from EDAM on the basis of relevance to the supplied text (<code>focused</code> from <code>vig2data</code> in the intended application). Terms from the topic, operation, data, and format components of EDAM may be returned.)</p>
 </div>
 <div class="section level3">
 <h3 id="bvbrowse">bvbrowse<a class="anchor" aria-label="anchor" href="#bvbrowse"></a>

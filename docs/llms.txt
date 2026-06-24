@@ -4,9 +4,23 @@
 
 <div class="section level1">
 
-This package investigates tools that can help understand the
-relationship of [biocViews](https://bioconductor.org/packages/biocViews)
-in relation to the [EDAM ontology](https://edamontology.org).
+This package aims to improve the tagging of Bioconductor packages
+through use of formal ontology. Currently packages are labeled using
+[biocViews](https://bioconductor.org/packages/biocViews). We aim to use
+the [EDAM ontology](https://edamontology.org) to improve discoverability
+of packages and functions.
+
+<div class="section level2">
+
+## tl;dr
+
+-   `library(biocEDAM)`
+-   `example(vig2data)` (produces `tst`)
+-   `edamize(tst$focused)` (produces EDAM term table relevant to a
+    Voyager vignette)
+-   `example(edamize)` (produces table relevant to tximeta)
+
+</div>
 
 <div class="section level2">
 
@@ -66,11 +80,14 @@ of content up to 450 words. This component will be used in `edamize`.
 
 ### edamize
 
-This function calls python code of Anh Nguyet Vu that prompts GPT to
-select and organize terms from EDAM on the basis of relevance to the
-supplied text (`focused` from `vig2data` in the intended application).
-Terms from the topic, operation, data, and format components of EDAM may
-be returned.
+This function, by default, prompts the selected LLM to find EDAM terms
+relevant to any free text string.
+
+(This function was inspired by python code of Anh Nguyet Vu that
+prompted GPT to select and organize terms from EDAM on the basis of
+relevance to the supplied text (`focused` from `vig2data` in the
+intended application). Terms from the topic, operation, data, and format
+components of EDAM may be returned.)
 
 </div>
 
@@ -174,6 +191,7 @@ evaluation of similarity to terms in the EDAM ontology.
 -   `make_edam_embeddings()` : Generate and save EDAM term embeddings
 -   `map_concepts()` : Map biological or medical concepts to ontology
     terms via OLS4
+-   `map_concepts_edam()` : Map concepts to EDAM ontology terms via OLS4
 -   `mapping_to_json()` : Export a map\_concepts result as a JSON
     document
 -   `mkdf()` : simple utility to process output of edamize into a
@@ -221,13 +239,15 @@ evaluation of similarity to terms in the EDAM ontology.
 
 </div>
 
--   [biocEDAM: ontology for a genomic data science
+-   [biocEDAM: ontology applications for a genomic data science
     ecosystem](https://github.com/vjcitn/biocEDAM/articles/biocEDAM.md):
 -   [Examining biotools tagging of Bioconductor
     packages](https://github.com/vjcitn/biocEDAM/articles/biotools.md):
 -   [Curation of Bioconductor package metadata, targeting EDAM ontology
     and ELIXIR bio.tools metadata
     schemas](https://github.com/vjcitn/biocEDAM/articles/curate.md):
+-   [Mapping free text to ontology terms with
+    map\_concepts](https://github.com/vjcitn/biocEDAM/articles/map_concepts.md):
 
 </div>
 

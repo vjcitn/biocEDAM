@@ -48,8 +48,6 @@ character(1) environment variable name, or "" for keyless providers
 <div class="sourceCode">
 
 ``` r
-llm_env_var("openai")
-#> [1] "OPENAI_API_KEY"
 llm_env_var("anthropic")
 #> [1] "ANTHROPIC_API_KEY"
 llm_env_var("ollama")   # "" — ollama needs no key

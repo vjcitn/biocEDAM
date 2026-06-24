@@ -32,7 +32,8 @@ read_prompt(name)
 -   name:
 
     character(1) filename within `inst/prompts/`, e.g. `"edamize.txt"`,
-    `"map_concepts.txt"`, `"flat_tagger.txt"`.
+    `"extract_concepts.txt"`, `"lookup_concept.txt"`,
+    `"flat_tagger.txt"`.
 
 </div>
 

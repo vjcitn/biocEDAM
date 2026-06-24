@@ -21,14 +21,14 @@ Source:
 [`DESCRIPTION`](https://github.com/vjcitn/biocEDAM/blob/HEAD/DESCRIPTION)
 
 Carey V, Vu A (2026). *biocEDAM: Support the investigation of biocViews
-in relation to EDAM ontology*. R package version 0.2.6,
+in relation to EDAM ontology*. R package version 0.2.23,
 <https://github.com/vjcitn/biocEDAM>.
 
     @Manual{,
       title = {biocEDAM: Support the investigation of biocViews in relation to EDAM ontology},
       author = {Vincent Carey and Anh Nguyet Vu},
       year = {2026},
-      note = {R package version 0.2.6},
+      note = {R package version 0.2.23},
       url = {https://github.com/vjcitn/biocEDAM},
     }
 

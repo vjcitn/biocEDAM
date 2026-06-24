@@ -23,7 +23,7 @@ edamize(
   nterms = 20L,
   prescrub = TRUE,
   prompt = read_prompt("edamize.txt"),
-  retrieve_k = 75L,
+  retrieve_k = NULL,
   sim_threshold = 0.3,
   embed_model = "text-embedding-3-small",
   ...
@@ -75,9 +75,10 @@ edamize(
     integer(1) or NULL. When not NULL, use embedding-based retrieval
     (via `retrieve_edam_candidates`) to pre-filter the EDAM vocabulary
     to the top `retrieve_k` candidates per type before LLM selection.
-    Requires `OPENAI_API_KEY` and the pre-computed embedding artifact
-    (see `get_edam_embeddings`). Set to `NULL` to pass the full
-    vocabulary directly to the LLM. Defaults to 75L.
+    Requires the API key for the embedding provider recorded in the
+    artifact (see `get_edam_embeddings` and `llm_env_var`). Set to
+    `NULL` to pass the full vocabulary directly to the LLM. Defaults to
+    75L.
 
 -   sim\_threshold:
 
@@ -88,8 +89,8 @@ edamize(
 
 -   embed\_model:
 
-    character(1) OpenAI embedding model used for retrieval; must match
-    the model used to build the artifact. Defaults to
+    character(1) embedding model used for retrieval; must match the
+    model used to build the artifact. Defaults to
     `"text-embedding-3-small"`.
 
 -   ...:
@@ -131,15 +132,10 @@ eliminated by post-filtering against the actual vocabulary.
 tryCatch(edamize(list(a=1)), error = function(e) conditionMessage(e))
 #> [1] "content_for_edam must be a single character string; did you mean to pass e.g. tst$focused?"
 
-if (interactive() &&
-    nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0 &&
-    nchar(Sys.getenv("OPENAI_API_KEY")) > 0) {
+if (interactive() && nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0) {
   content <- readRDS(system.file("rds/tximetaFocused.rds", package="biocEDAM"))
-  lk <- edamize(content$focused)   # retrieve_k=75 uses bundled embeddings
+  lk <- edamize(content$focused, retrieve_k = NULL)
   print(lk)
-  # Skip embedding retrieval and pass full vocabulary to the LLM:
-  lk2 <- edamize(content$focused, retrieve_k = NULL)
-  print(lk2)
 }
 ```
 

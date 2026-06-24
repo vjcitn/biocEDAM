@@ -4,10 +4,19 @@
 
 <div class="ref-description section level2">
 
-Sends `query` to an ellmer chat that has EBI OLS4 search tools
-registered, asking the LLM to identify concepts and retrieve the best
-matching ontology terms. Returns a typed data frame conforming to
-`TermMappingTable`.
+Uses a two-stage approach to avoid LLM hallucination under tool-call
+overload:
+
+1.  **Concept extraction** — a plain LLM call (no tools) identifies all
+    concepts in `query` and returns them as a character vector.
+
+2.  **Per-concept lookup** — each concept gets its own fresh single-turn
+    chat so conversation history never accumulates across concepts. The
+    LLM calls an OLS4 tool and returns only a term label; R code
+    resolves the label to a canonical IRI via OLS4 REST.
+
+Results are validated against the EBI OLS4 REST API via `ols4_enrich`,
+which adds `validated` and `definition` columns.
 
 </div>
 
@@ -23,9 +32,17 @@ map_concepts(
   provider = "anthropic",
   model = "claude-sonnet-4-5",
   temperature = 0,
-  prompt = read_prompt("map_concepts.txt"),
-  label_match = FALSE,
-  chat = ols4_chat(provider = provider, model = model, temperature = temperature)
+  extract_prompt = read_prompt("extract_concepts.txt"),
+  lookup_prompt = read_prompt("lookup_concept.txt"),
+  confirm = interactive(),
+  max_concepts = Inf,
+  deduplicate = TRUE,
+  definition = FALSE,
+  label_match = TRUE,
+  ontology_filter = NULL,
+  tools = ols4_mcp_tools(),
+  extractor = llm_chat(provider = provider, model = model, api_args = list(temperature =
+    temperature))
 )
 ```
 
@@ -55,27 +72,74 @@ map_concepts(
 -   temperature:
 
     numeric(1) sampling temperature; defaults to `0` for deterministic
-    output. Ignored when `chat` is supplied directly.
+    output.
 
--   prompt:
+-   extract\_prompt:
 
-    character(1) instruction text sent to the LLM before the input text.
-    Defaults to the contents of `inst/prompts/map_concepts.txt`; use
-    `read_prompt("map_concepts.txt")` to inspect or customise.
+    character(1) prompt for Stage 1 (concept extraction). Defaults to
+    `inst/prompts/extract_concepts.txt`.
+
+-   lookup\_prompt:
+
+    character(1) prompt for Stage 2 (per-concept OLS4 lookup). Defaults
+    to `inst/prompts/lookup_concept.txt`.
+
+-   confirm:
+
+    logical(1) if `TRUE` (the default in interactive sessions), Stage 1
+    concepts are printed and the user is prompted to confirm before
+    Stage 2 begins. Entering nothing or `y` proceeds; anything else
+    aborts and returns `NULL` invisibly. Set to `FALSE` to skip the
+    prompt in scripts and non-interactive contexts.
+
+-   max\_concepts:
+
+    integer(1) maximum number of concepts to look up in Stage 2. The
+    first `max_concepts` items from Stage 1 are used; the rest are
+    silently dropped. `Inf` (default) processes all concepts.
+
+-   deduplicate:
+
+    logical(1) if `TRUE` (default), rows with duplicate `term_iri`
+    values are collapsed into one row; the `input_text` field of the
+    surviving row lists all source concepts separated by `"; "`.
+
+-   definition:
+
+    logical(1) if `FALSE` (default), the `definition` column is set to
+    `NA` and no extra OLS4 REST calls are made. Set to `TRUE` to fetch
+    authoritative definitions via `ols4_enrich`, at the cost of one
+    additional REST call per term.
 
 -   label\_match:
 
-    logical(1) if `TRUE`, adds `llm_label` and `label_match` columns via
-    `ols4_enrich`, flagging rows where the LLM label and OLS4 canonical
-    label share no content words (a sign of a hallucinated IRI).
-    Defaults to `FALSE`.
+    logical(1) if `TRUE` (default), adds `llm_label` and `label_match`
+    columns, where `label_match = FALSE` flags rows where the LLM-chosen
+    label and the OLS4 canonical label share no content words — a
+    reliable signal of a spurious mapping. Filter with
+    `result[result$label_match, ]` to retain only plausible rows.
+    Implies `definition = TRUE` since it requires `ols4_enrich`.
 
--   chat:
+-   ontology\_filter:
 
-    an ellmer `Chat` object with OLS4 tools already registered. When
-    supplied, `provider`, `model`, and `temperature` are ignored. Build
-    once with `ols4_chat` and reuse across calls to avoid restarting the
-    bridge process each time.
+    character(1) or `NULL`. When supplied, overrides the ontology
+    returned by the LLM and forces the OLS4 REST label search to search
+    within that ontology only (e.g. `"edam"`). `NULL` (default) uses
+    whatever ontology the LLM selects.
+
+-   tools:
+
+    list of ellmer `ToolDef` objects as returned by `ols4_mcp_tools`.
+    Loaded once per `map_concepts` call; each per-concept lookup creates
+    a fresh chat that registers these tools, preventing context
+    accumulation across concepts. Supply a pre-loaded tools object to
+    avoid restarting the MCP bridge on repeated calls.
+
+-   extractor:
+
+    an ellmer `Chat` object *without* tools, used for Stage 1 concept
+    extraction. Defaults to a plain `llm_chat` with the same provider,
+    model, and temperature.
 
 </div>
 
@@ -84,21 +148,11 @@ map_concepts(
 ## Value
 
 a data.frame with columns `input_text`, `term_label`, `term_iri`,
-`obo_id`, `ontology`, `rationale`, `validated`, and `definition`, one
-row per concept-term pair (plus `llm_label` and `label_match` when
-`label_match=TRUE`). Filter on `validated == TRUE` to retain only
-OLS4-confirmed terms.
-
-</div>
-
-<div class="section level2">
-
-## Details
-
-Each row is validated against the EBI OLS4 REST API via `ols4_enrich`:
-rows whose `term_iri` cannot be found in OLS4 are dropped with a
-warning, and an authoritative `definition` column is added alongside the
-LLM-generated `rationale`.
+`obo_id`, `ontology`, `rationale`, `validated`, `definition`,
+`llm_label`, and `label_match`, one row per concept-term pair. **Outputs
+require human curation.** Filter on `result[result$label_match, ]` to
+discard the most obvious spurious mappings, then review remaining rows
+before treating results as authoritative.
 
 </div>
 
@@ -110,17 +164,13 @@ LLM-generated `rationale`.
 
 ``` r
 if (interactive()) {
-    # default provider (anthropic)
-    map_concepts("spatial autocorrelation in gene expression")
+    map_concepts("atrial fibrillation and whole genome sequencing",
+                 max_concepts = 10)
 
-    # switch provider
-    map_concepts("chromatin accessibility",
-                 provider = "openai", model = "gpt-4o")
-
-    # reuse a pre-built chat across multiple calls
-    ch <- ols4_chat()
-    map_concepts("atrial fibrillation", chat = ch)
-    map_concepts("whole genome sequencing", chat = ch)
+    # pre-load tools to avoid restarting the MCP bridge on repeated calls
+    tls <- ols4_mcp_tools()
+    map_concepts("atrial fibrillation", tools = tls)
+    map_concepts("whole genome sequencing", tools = tls)
 }
 ```
 

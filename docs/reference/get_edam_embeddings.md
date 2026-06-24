@@ -64,7 +64,7 @@ AnnotationHub (see `make_edam_embeddings`).
 
 ``` r
 emb <- get_edam_embeddings()
-#> Loading bundled EDAM embeddings from /private/var/folders/yw/gfhgh7k565v9w83x_k764wbc0000gp/T/RtmpMjVNCm/temp_libpathad7f6dc6f6fe/biocEDAM/demo_embedding/edam_embeddings.rds
+#> Loading bundled EDAM embeddings from /private/var/folders/yw/gfhgh7k565v9w83x_k764wbc0000gp/T/RtmpbnJ5Gy/temp_libpathed7e7dd7ef17/biocEDAM/demo_embedding/edam_embeddings.rds
 cat(sprintf("%d terms | %d dimensions | model: %s\n",
     length(emb$ids), ncol(emb$embeddings), emb$model))
 #> 2399 terms | 1536 dimensions | model: text-embedding-3-small

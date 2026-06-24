@@ -59,8 +59,6 @@ not set.
 ``` r
 llm_api_key("ollama")  # always returns "" without checking any env var
 #> [1] ""
-if (nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0)
-    llm_api_key("anthropic")
 ```
 
 </div>

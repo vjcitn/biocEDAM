@@ -1,10 +1,13 @@
 <div id="main" class="col-md-9" role="main">
 
-# biocEDAM: ontology for a genomic data science ecosystem
+# biocEDAM: ontology applications for a genomic data science ecosystem
 
 <div class="section level2">
 
 ## Introduction
+
+This document provides very general outlook on strategy for enhancing
+package tagging and discovery for Bioconductor.
 
 <div class="section level3">
 
@@ -39,24 +42,27 @@ s1[sample(seq_len(nrow(s1)), 10),]
 </div>
 
     ## # A tibble: 10 × 2
-    ##    Package        tags                                                          
-    ##    <chr>          <chr>                                                         
-    ##  1 HiLDA          Software:BiologicalQuestion:Technology:StatisticalMethod:Soma…
-    ##  2 doseR          Software:Infrastructure:Technology:AssayDomain:ResearchField:…
-    ##  3 graph          Software:StatisticalMethod:GraphAndNetwork                    
-    ##  4 cn.farms       Software:Technology:AssayDomain:Microarray:CopyNumberVariation
-    ##  5 sSeq           Software:ResearchField:Immunology:Technology:Sequencing:Immun…
-    ##  6 plotgardener   Software:WorkflowStep:BiologicalQuestion:ResearchField:Techno…
-    ##  7 yamss          Software:Technology:ResearchField:BiologicalQuestion:MassSpec…
-    ##  8 iSEEpathways   Software:BiologicalQuestion:AssayDomain:Infrastructure:Workfl…
-    ##  9 CAFE           Software:AssayDomain:Technology:Microarray:BiologicalQuestion…
-    ## 10 tidyexposomics Software:ResearchField:AssayDomain:BiologicalQuestion:Workflo…
+    ##    Package      tags                                                            
+    ##    <chr>        <chr>                                                           
+    ##  1 HiLDA        Software:BiologicalQuestion:Technology:StatisticalMethod:Somati…
+    ##  2 doseR        Software:Infrastructure:Technology:AssayDomain:ResearchField:Bi…
+    ##  3 graph        Software:StatisticalMethod:GraphAndNetwork                      
+    ##  4 cn.farms     Software:Technology:AssayDomain:Microarray:CopyNumberVariation  
+    ##  5 sscu         Software:ResearchField:AssayDomain:Technology:Sequencing:Geneti…
+    ##  6 plotgardener Software:WorkflowStep:BiologicalQuestion:ResearchField:Technolo…
+    ##  7 XVector      Software:Infrastructure:DataRepresentation                      
+    ##  8 iSEEpathways Software:BiologicalQuestion:AssayDomain:Infrastructure:Workflow…
+    ##  9 CAFE         Software:AssayDomain:Technology:Microarray:BiologicalQuestion:G…
+    ## 10 tidyCoverage Software:Technology:BiologicalQuestion:Sequencing:Coverage:
 
 </div>
 
 <div class="section level3">
 
 ### EDAM
+
+The following is appropriate with Bioc 3.23. Work in the devel branch
+for 3.24 will use ontoProc2.
 
 At edamontology.org, EDAM is described as “a comprehensive ontology of
 well-established, familiar concepts that are prevalent within
@@ -73,18 +79,6 @@ ontology:
 
 ``` r
 library(ontoProc)
-```
-
-</div>
-
-    ## Warning: multiple methods tables found for 'scale'
-
-    ## Warning: replacing previous import 'BiocGenerics::scale' by
-    ## 'DelayedArray::scale' when loading 'SummarizedExperiment'
-
-<div id="cb6" class="sourceCode">
-
-``` r
 epath = owl2cache(url="https://edamontology.org/EDAM_1.25.owl")
 edam = setup_entities2(epath)
 set.seed(1234)
@@ -119,7 +113,7 @@ biocViews. The [biocEDAM package](https://github.com/vjcitn/biocEDAM)
 includes a table of results, that we filter here for scores exceeding
 0.8.
 
-<div id="cb7" class="sourceCode">
+<div id="cb4" class="sourceCode">
 
 ``` r
 library(biocEDAM)

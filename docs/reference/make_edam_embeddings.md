@@ -68,12 +68,9 @@ resource returned by `get_edam_embeddings`).
 <div class="sourceCode">
 
 ``` r
-if (interactive() && nchar(Sys.getenv("OPENAI_API_KEY")) > 0) {
-    out <- file.path(tempdir(), "edam_test.rds")
-    emb <- make_edam_embeddings(outfile = out)
-    cat("Terms embedded:", length(emb$ids), "\n")
-    unlink(out)
-}
+# This is a maintainer-level function; requires a provider API key and
+# the EDAM SemanticSQL database (ontoProc2::semsql_connect).
+# See inst/scripts/make_edam_embeddings.R for a worked example.
 ```
 
 </div>

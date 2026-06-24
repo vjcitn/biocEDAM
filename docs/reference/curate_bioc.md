@@ -45,14 +45,14 @@ curate_bioc(
 -   model:
 
     character(1) model identifier for the selected provider; defaults to
-    "gpt-4o" (OpenAI)
+    "claude-sonnet-4-5" (Anthropic)
 
 -   provider:
 
-    character(1) LLM provider for the Python path; currently only
-    "openai" is supported. The value of the corresponding environment
-    variable (see `llm_env_var`) is used as the API key and the function
-    stops with an informative error if the variable is not set.
+    character(1) LLM provider for the Python path; defaults to
+    "anthropic". The value of the corresponding environment variable
+    (see `llm_env_var`) is used as the API key and the function stops
+    with an informative error if the variable is not set.
 
 </div>
 
@@ -81,7 +81,7 @@ function for more flexibility.
 
 ``` r
 if (interactive()) {
-  # OPENAI_API_KEY must be set for the default provider
+  # ANTHROPIC_API_KEY must be set for the default provider
   lk = curate_bioc()
   str(lk)
 }

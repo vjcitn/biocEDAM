@@ -42,7 +42,8 @@ tag_bioc(
 
 -   provider:
 
-    character(1) LLM provider; see `llm_env_var`. Defaults to "openai".
+    character(1) LLM provider; see `llm_env_var`. Defaults to
+    "anthropic".
 
 </div>
 

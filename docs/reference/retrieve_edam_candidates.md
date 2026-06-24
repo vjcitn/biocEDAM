@@ -4,9 +4,10 @@
 
 <div class="ref-description section level2">
 
-Embeds `content` using the OpenAI API, computes cosine similarity
-against a pre-computed EDAM embedding matrix, and returns the top
-`retrieve_k` candidates per EDAM type (topic, operation, data, format).
+Embeds `content` using the provider recorded in `edam_emb`, computes
+cosine similarity against a pre-computed EDAM embedding matrix, and
+returns the top `retrieve_k` candidates per EDAM type (topic, operation,
+data, format).
 
 </div>
 
@@ -77,7 +78,7 @@ columns `id` and `lbl`, ordered by descending cosine similarity to
 ``` r
 # Model mismatch is caught before any API call
 emb <- get_edam_embeddings()
-#> Loading bundled EDAM embeddings from /private/var/folders/yw/gfhgh7k565v9w83x_k764wbc0000gp/T/RtmpMjVNCm/temp_libpathad7f6dc6f6fe/biocEDAM/demo_embedding/edam_embeddings.rds
+#> Loading bundled EDAM embeddings from /private/var/folders/yw/gfhgh7k565v9w83x_k764wbc0000gp/T/RtmpbnJ5Gy/temp_libpathed7e7dd7ef17/biocEDAM/demo_embedding/edam_embeddings.rds
 tryCatch(
     retrieve_edam_candidates("some text", emb,
                              embed_model = "text-embedding-3-large"),
@@ -85,7 +86,7 @@ tryCatch(
 )
 #> [1] "embed_model 'text-embedding-3-large' does not match the artifact model 'text-embedding-3-small'.\nRun make_edam_embeddings(model = 'text-embedding-3-large') to generate a matching artifact."
 
-if (interactive() && nchar(Sys.getenv("OPENAI_API_KEY")) > 0) {
+if (interactive()) {
     candidates <- retrieve_edam_candidates(
         "RNA-seq transcript quantification and metadata management",
         emb, retrieve_k = 5L)

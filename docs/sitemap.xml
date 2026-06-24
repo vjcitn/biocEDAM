@@ -5,6 +5,7 @@
 <url><loc>https://github.com/vjcitn/biocEDAM/articles/curate.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/articles/foo.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/articles/index.html</loc></url>
+<url><loc>https://github.com/vjcitn/biocEDAM/articles/map_concepts.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/authors.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/index.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/news/index.html</loc></url>
@@ -32,6 +33,7 @@
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/llm_env_var.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/make_edam_embeddings.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/map_concepts.html</loc></url>
+<url><loc>https://github.com/vjcitn/biocEDAM/reference/map_concepts_edam.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/mapping_to_json.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/mkdf.html</loc></url>
 <url><loc>https://github.com/vjcitn/biocEDAM/reference/ols4_chat.html</loc></url>

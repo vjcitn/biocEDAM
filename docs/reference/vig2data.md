@@ -52,13 +52,13 @@ vig2data(
 -   model:
 
     character(1) model identifier for the selected provider; defaults to
-    "gpt-4o" (OpenAI)
+    "claude-sonnet-4-5" (Anthropic)
 
 -   provider:
 
     character(1) LLM provider; see `llm_env_var` for supported values
     and the required environment variable for each. Defaults to
-    "openai".
+    "anthropic".
 
 -   ...:
 
@@ -82,8 +82,8 @@ persuasion
 Based on code from
 https://cran.r-project.org/web/packages/ellmer/vignettes/structured-data.html
 March 15 2025. The API key for the chosen provider must be available in
-the corresponding environment variable (e.g. OPENAI\_API\_KEY for
-"openai", ANTHROPIC\_API\_KEY for "anthropic").
+the corresponding environment variable (see `llm_env_var` for the
+mapping).
 
 </div>
 

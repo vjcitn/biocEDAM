@@ -1,10 +1,10 @@
 ---
-title: "biocEDAM: ontology for a genomic data science ecosystem"
+title: "biocEDAM: ontology applications for a genomic data science ecosystem"
 author: "Vincent J. Carey, stvjc at channing.harvard.edu"
 date: "`r format(Sys.time(), '%B %d, %Y')`"
 vignette: >
   %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteIndexEntry{biocEDAM: ontology for a genomic data science ecosystem}
+  %\VignetteIndexEntry{biocEDAM: ontology applications for a genomic data science ecosystem}
   %\VignetteEncoding{UTF-8}
 output:
   BiocStyle::html_document:
@@ -15,6 +15,9 @@ output:
 ---
 
 # Introduction
+
+This document provides very general outlook on strategy for
+enhancing package tagging and discovery for Bioconductor.
 
 ## biocViews
 
@@ -46,6 +49,9 @@ s1[sample(seq_len(nrow(s1)), 10),]
 ```
 
 ## EDAM
+
+The following is appropriate with Bioc 3.23.  Work in the devel
+branch for 3.24 will use ontoProc2.
 
 At edamontology.org, EDAM is described as "a comprehensive ontology of well-established, familiar concepts that are prevalent within bioscientific data analysis and data management (including computational biology, bioinformatics, and bioimage informatics). EDAM includes topics, operations, types of data and data identifiers, and data formats, relevant in data analysis and data management in life sciences."  
 

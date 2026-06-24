@@ -48,6 +48,7 @@
 -   `make_edam_embeddings()` : Generate and save EDAM term embeddings
 -   `map_concepts()` : Map biological or medical concepts to ontology
     terms via OLS4
+-   `map_concepts_edam()` : Map concepts to EDAM ontology terms via OLS4
 -   `mapping_to_json()` : Export a map\_concepts result as a JSON
     document
 -   `mkdf()` : simple utility to process output of edamize into a
