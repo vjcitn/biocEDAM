@@ -40,9 +40,9 @@ customise curation behaviour without editing package files.}
 \item{retrieve_k}{integer(1) or NULL.  When not NULL, use embedding-based
 retrieval (via \code{\link{retrieve_edam_candidates}}) to pre-filter the
 EDAM vocabulary to the top \code{retrieve_k} candidates per type before
-LLM selection.  Requires the API key for the embedding provider used when
-building the artifact (e.g. \code{OPENAI_API_KEY} for the default bundled
-embeddings; see \code{\link{get_edam_embeddings}}).
+LLM selection.  Requires the API key for the embedding provider recorded
+in the artifact (see \code{\link{get_edam_embeddings}} and
+\code{\link{llm_env_var}}).
 Set to \code{NULL} to pass the full vocabulary directly to the LLM.
 Defaults to 75L.}
 

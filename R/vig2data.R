@@ -12,7 +12,7 @@
 #' @return a list with components author, topics, focused, coherence, and persuasion
 #' @note Based on code from https://cran.r-project.org/web/packages/ellmer/vignettes/structured-data.html
 #' March 15 2025.  The API key for the chosen provider must be available in the corresponding
-#' environment variable (e.g. ANTHROPIC_API_KEY for "anthropic", OPENAI_API_KEY for "openai").
+#' environment variable (see \code{\link{llm_env_var}} for the mapping).
 #' @examples
 #' if (interactive()) {
 #' # ANTHROPIC_API_KEY must be set for the default provider

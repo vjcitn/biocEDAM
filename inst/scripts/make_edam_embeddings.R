@@ -2,7 +2,7 @@
 # Maintainer script: generate the EDAM term embedding artifact for AnnotationHub.
 #
 # Prerequisites:
-#   - OPENAI_API_KEY must be set
+#   - API key for the chosen embedding provider must be set (see llm_env_var())
 #   - biocEDAM and ontoProc2 installed
 #
 # Run once per EDAM release.  The resulting .rds is uploaded to the

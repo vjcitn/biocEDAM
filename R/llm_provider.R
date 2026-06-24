@@ -2,7 +2,6 @@
 #' @param provider character(1) one of "openai", "anthropic", "claude", "gemini", "google", "ollama"
 #' @return character(1) environment variable name, or "" for keyless providers
 #' @examples
-#' llm_env_var("openai")
 #' llm_env_var("anthropic")
 #' llm_env_var("ollama")   # "" — ollama needs no key
 #' @export
@@ -28,8 +27,6 @@ llm_env_var <- function(provider) {
 #' @note Stops with an informative error if the required environment variable is not set.
 #' @examples
 #' llm_api_key("ollama")  # always returns "" without checking any env var
-#' if (nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0)
-#'     llm_api_key("anthropic")
 #' @export
 llm_api_key <- function(provider) {
   var <- llm_env_var(provider)

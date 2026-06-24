@@ -47,7 +47,7 @@ tryCatch(
     error = function(e) conditionMessage(e)
 )
 
-if (interactive() && nchar(Sys.getenv("OPENAI_API_KEY")) > 0) {
+if (interactive()) {
     candidates <- retrieve_edam_candidates(
         "RNA-seq transcript quantification and metadata management",
         emb, retrieve_k = 5L)
