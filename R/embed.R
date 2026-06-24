@@ -231,9 +231,10 @@ make_edam_embeddings <- function(
 
 #' Retrieve the top-k semantically closest EDAM terms per type
 #'
-#' Embeds \code{content} using the OpenAI API, computes cosine similarity
-#' against a pre-computed EDAM embedding matrix, and returns the top
-#' \code{retrieve_k} candidates per EDAM type (topic, operation, data, format).
+#' Embeds \code{content} using the provider recorded in \code{edam_emb},
+#' computes cosine similarity against a pre-computed EDAM embedding matrix,
+#' and returns the top \code{retrieve_k} candidates per EDAM type
+#' (topic, operation, data, format).
 #'
 #' @param content character(1) text to use as the query (e.g. a package
 #' description).

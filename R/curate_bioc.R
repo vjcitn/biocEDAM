@@ -7,15 +7,15 @@
 #' Bioconductor packages, targeting EDAM ontology and bio.tools schema
 #' @param packageName character(1) a Bioconductor software package name, its release landing page will be scraped
 #' @param devurl character(1) a URL for doc originating from the developer
-#' @param model character(1) model identifier for the selected provider; defaults to "gpt-4o" (OpenAI)
-#' @param provider character(1) LLM provider for the Python path; currently only "openai" is supported.
+#' @param model character(1) model identifier for the selected provider; defaults to "claude-sonnet-4-5" (Anthropic)
+#' @param provider character(1) LLM provider for the Python path; defaults to "anthropic".
 #' The value of the corresponding environment variable (see \code{\link{llm_env_var}}) is used as the API key
 #' and the function stops with an informative error if the variable is not set.
 #' @return two python dicts, base_final and edam_processed
 #' @note Schema completion is done with temperature set to 0.0; see edamize function for more flexibility.
 #' @examples
 #' if (interactive()) {
-#'   # OPENAI_API_KEY must be set for the default provider
+#'   # ANTHROPIC_API_KEY must be set for the default provider
 #'   lk = curate_bioc()
 #'   str(lk)
 #' }

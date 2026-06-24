@@ -17,7 +17,7 @@ tag_bioc(
 
 \item{url}{URL for representative content, in html or pdf}
 
-\item{provider}{character(1) LLM provider; see \code{\link{llm_env_var}}. Defaults to "openai".}
+\item{provider}{character(1) LLM provider; see \code{\link{llm_env_var}}. Defaults to "anthropic".}
 }
 \value{
 a data.frame with biocViews and EDAM suggestions

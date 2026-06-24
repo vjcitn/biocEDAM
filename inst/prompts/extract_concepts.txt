@@ -1,21 +1,27 @@
-Identify all biological, medical, and technical concepts in the input text.
-Return each as a short phrase (2-5 words), one concept per item.
+Identify the most important biological, medical, and technical concepts in the input text.
+Return each as a short phrase (2–5 words) that names a well-known concept likely to have
+an entry in a biomedical or computational ontology.
 
-Include: diseases, disorders, phenotypes, biological processes, molecular functions,
-cell types, tissues, body parts, experimental assays, omics fields, data types,
-computational methods, and study designs.
+Diversity rules — apply these strictly:
+- Cluster related phrases first. If several phrases describe variations of the same idea
+  (e.g. "spatial analysis", "spatial data analysis", "spatial single-cell analysis"),
+  keep only the single most informative representative of that cluster.
+- Cover distinct facets of the text. Choose concepts that span different categories such
+  as: biology domain, cell or tissue type, experimental assay or technology, data type,
+  and computational method. Do not return five concepts from the same facet.
+- Aim for 5–10 well-separated concepts total.
+
+Prefer broader, established concept names over narrow or implementation-specific ones.
+For example, prefer "spatial transcriptomics" over "SpatialFeatureExperiment S4 object".
 
 Exclude:
+- Package names, software class names, and implementation details
+  (e.g. "SpatialFeatureExperiment", "S4 class", "ggplot2", "Seurat object")
 - Author names, institution names, URLs, and numeric values
 - Generic words with no standalone ontology meaning (e.g. "patients", "study",
   "analysis", "individuals", "data", "approach", "method")
-- Vague relational or descriptive phrases that combine a generic noun with a
-  qualifier but do not name a specific ontology concept — for example:
-  "rare risk variants", "protective variants", "common variants",
-  "genetic factors", "risk factors", "disease phenotypes", "biological markers"
-  These describe properties or relationships, not named entities; omit them.
-- Adjective-noun phrases where the adjective is a study-design qualifier rather
-  than part of a recognised concept name (e.g. "early-onset" modifying a disease
-  is acceptable; "rare" modifying "variants" is not)
+- Vague relational or descriptive phrases that describe properties or relationships
+  rather than named entities (e.g. "rare risk variants", "protective variants",
+  "common variants", "genetic factors", "risk factors", "disease phenotypes")
 
 When in doubt, prefer to omit rather than include a borderline phrase.

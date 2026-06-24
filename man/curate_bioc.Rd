@@ -18,9 +18,9 @@ curate_bioc(
 
 \item{devurl}{character(1) a URL for doc originating from the developer}
 
-\item{model}{character(1) model identifier for the selected provider; defaults to "gpt-4o" (OpenAI)}
+\item{model}{character(1) model identifier for the selected provider; defaults to "claude-sonnet-4-5" (Anthropic)}
 
-\item{provider}{character(1) LLM provider for the Python path; currently only "openai" is supported.
+\item{provider}{character(1) LLM provider for the Python path; defaults to "anthropic".
 The value of the corresponding environment variable (see \code{\link{llm_env_var}}) is used as the API key
 and the function stops with an informative error if the variable is not set.}
 }
@@ -36,7 +36,7 @@ Schema completion is done with temperature set to 0.0; see edamize function for 
 }
 \examples{
 if (interactive()) {
-  # OPENAI_API_KEY must be set for the default provider
+  # ANTHROPIC_API_KEY must be set for the default provider
   lk = curate_bioc()
   str(lk)
 }

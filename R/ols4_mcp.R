@@ -311,6 +311,11 @@ ols4_enrich <- function(result, label_match = FALSE) {
 #' Defaults to \code{inst/prompts/extract_concepts.txt}.
 #' @param lookup_prompt character(1) prompt for Stage 2 (per-concept OLS4 lookup).
 #' Defaults to \code{inst/prompts/lookup_concept.txt}.
+#' @param confirm logical(1) if \code{TRUE} (the default in interactive sessions),
+#' Stage 1 concepts are printed and the user is prompted to confirm before Stage 2
+#' begins.  Entering nothing or \code{y} proceeds; anything else aborts and
+#' returns \code{NULL} invisibly.  Set to \code{FALSE} to skip the prompt in
+#' scripts and non-interactive contexts.
 #' @param max_concepts integer(1) maximum number of concepts to look up in
 #' Stage 2.  The first \code{max_concepts} items from Stage 1 are used;
 #' the rest are silently dropped.  \code{Inf} (default) processes all concepts.
@@ -365,6 +370,7 @@ map_concepts <- function(query,
                          temperature    = 0,
                          extract_prompt = read_prompt("extract_concepts.txt"),
                          lookup_prompt  = read_prompt("lookup_concept.txt"),
+                         confirm        = interactive(),
                          max_concepts   = Inf,
                          deduplicate    = TRUE,
                          definition     = FALSE,
@@ -391,9 +397,18 @@ map_concepts <- function(query,
         message(sprintf("Extracted %d concept(s); limiting to first %d.",
                         length(concepts), max_concepts))
         concepts <- concepts[seq_len(max_concepts)]
-    } else {
-        message(sprintf("Extracted %d concept(s); querying OLS4 for each...",
-                        length(concepts)))
+    }
+
+    message(sprintf("Extracted %d concept(s):", length(concepts)))
+    for (i in seq_along(concepts))
+        message(sprintf("  [%d] %s", i, concepts[[i]]))
+
+    if (isTRUE(confirm)) {
+        ans <- readline("Proceed with OLS4 lookup? [Y/n] ")
+        if (nchar(trimws(ans)) > 0L && !grepl("^[Yy]", ans)) {
+            message("Aborted.")
+            return(invisible(NULL))
+        }
     }
 
     # Stage 2: fresh single-turn chat per concept eliminates context accumulation.

@@ -26,7 +26,7 @@
 #' variables. In addition, Voyager provides tools for multivariate analysis using methods 
 #' such as MULTISPATI PCA, which integrates spatial structure into principal component 
 #' analysis, and Anselins recent multivariate local Gearys C" 
-#' flat_tagger(txt, nterms=12, model="gpt-4o")
+#' flat_tagger(txt, nterms=12)
 #' }
 #' @export
 flat_tagger <- function(txt, nterms = 20, model="claude-sonnet-4-5", provider="anthropic",

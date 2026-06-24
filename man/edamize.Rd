@@ -11,7 +11,7 @@ edamize(
   nterms = 20L,
   prescrub = TRUE,
   prompt = read_prompt("edamize.txt"),
-  retrieve_k = 75L,
+  retrieve_k = NULL,
   sim_threshold = 0.3,
   embed_model = "text-embedding-3-small",
   ...
@@ -40,8 +40,9 @@ customise curation behaviour without editing package files.}
 \item{retrieve_k}{integer(1) or NULL.  When not NULL, use embedding-based
 retrieval (via \code{\link{retrieve_edam_candidates}}) to pre-filter the
 EDAM vocabulary to the top \code{retrieve_k} candidates per type before
-LLM selection.  Requires \code{OPENAI_API_KEY} and the pre-computed
-embedding artifact (see \code{\link{get_edam_embeddings}}).
+LLM selection.  Requires the API key for the embedding provider used when
+building the artifact (e.g. \code{OPENAI_API_KEY} for the default bundled
+embeddings; see \code{\link{get_edam_embeddings}}).
 Set to \code{NULL} to pass the full vocabulary directly to the LLM.
 Defaults to 75L.}
 
@@ -50,7 +51,7 @@ term to be passed to the LLM.  Terms below this threshold are dropped before
 the LLM selection step, reducing irrelevant tags.  Only used when
 \code{retrieve_k} is not NULL.  Defaults to 0.3.}
 
-\item{embed_model}{character(1) OpenAI embedding model used for retrieval;
+\item{embed_model}{character(1) embedding model used for retrieval;
 must match the model used to build the artifact.
 Defaults to \code{"text-embedding-3-small"}.}
 
@@ -75,14 +76,9 @@ the actual vocabulary.
 # Input validation fires without any API key
 tryCatch(edamize(list(a=1)), error = function(e) conditionMessage(e))
 
-if (interactive() &&
-    nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0 &&
-    nchar(Sys.getenv("OPENAI_API_KEY")) > 0) {
+if (interactive() && nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0) {
   content <- readRDS(system.file("rds/tximetaFocused.rds", package="biocEDAM"))
-  lk <- edamize(content$focused)   # retrieve_k=75 uses bundled embeddings
+  lk <- edamize(content$focused, retrieve_k = NULL)
   print(lk)
-  # Skip embedding retrieval and pass full vocabulary to the LLM:
-  lk2 <- edamize(content$focused, retrieve_k = NULL)
-  print(lk2)
 }
 }

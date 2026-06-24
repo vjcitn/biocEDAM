@@ -52,6 +52,6 @@ and cross variograms for evaluating spatial associations between two
 variables. In addition, Voyager provides tools for multivariate analysis using methods 
 such as MULTISPATI PCA, which integrates spatial structure into principal component 
 analysis, and Anselins recent multivariate local Gearys C" 
-flat_tagger(txt, nterms=12, model="gpt-4o")
+flat_tagger(txt, nterms=12)
 }
 }

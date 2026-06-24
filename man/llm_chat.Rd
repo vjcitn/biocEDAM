@@ -4,7 +4,7 @@
 \alias{llm_chat}
 \title{Create an ellmer chat object for a given LLM provider}
 \usage{
-llm_chat(provider = "openai", model, ...)
+llm_chat(provider = "anthropic", model, ...)
 }
 \arguments{
 \item{provider}{character(1) provider name; see \code{llm_env_var}}
@@ -20,8 +20,7 @@ an ellmer Chat object
 Create an ellmer chat object for a given LLM provider
 }
 \note{
-The \code{model} default in calling functions is typically an OpenAI model name.
-When using a different provider, supply an appropriate model name for that provider.
+Supply a model name appropriate for the chosen provider.
 }
 \examples{
 if (interactive() && nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0) {

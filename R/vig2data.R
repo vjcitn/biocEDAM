@@ -5,14 +5,14 @@
 #' @param url character(1) URL for an html bioconductor vignettes
 #' @param maxnchar numeric(1) text is truncated to a substring with this length
 #' @param n_pdf_pages numeric(1) maximum number of pages to extract text from for pdf vignettes
-#' @param model character(1) model identifier for the selected provider; defaults to "gpt-4o" (OpenAI)
+#' @param model character(1) model identifier for the selected provider; defaults to "claude-sonnet-4-5" (Anthropic)
 #' @param provider character(1) LLM provider; see \code{\link{llm_env_var}} for supported values and
-#' the required environment variable for each.  Defaults to "openai".
+#' the required environment variable for each.  Defaults to "anthropic".
 #' @param \dots passed to the underlying \code{chat_*} function via \code{\link{llm_chat}}
 #' @return a list with components author, topics, focused, coherence, and persuasion
 #' @note Based on code from https://cran.r-project.org/web/packages/ellmer/vignettes/structured-data.html
 #' March 15 2025.  The API key for the chosen provider must be available in the corresponding
-#' environment variable (e.g. OPENAI_API_KEY for "openai", ANTHROPIC_API_KEY for "anthropic").
+#' environment variable (e.g. ANTHROPIC_API_KEY for "anthropic", OPENAI_API_KEY for "openai").
 #' @examples
 #' if (interactive()) {
 #' # ANTHROPIC_API_KEY must be set for the default provider

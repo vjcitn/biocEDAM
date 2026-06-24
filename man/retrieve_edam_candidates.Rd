@@ -33,9 +33,10 @@ with columns \code{id} and \code{lbl}, ordered by descending cosine
 similarity to \code{content}.
 }
 \description{
-Embeds \code{content} using the OpenAI API, computes cosine similarity
-against a pre-computed EDAM embedding matrix, and returns the top
-\code{retrieve_k} candidates per EDAM type (topic, operation, data, format).
+Embeds \code{content} using the provider recorded in \code{edam_emb},
+computes cosine similarity against a pre-computed EDAM embedding matrix,
+and returns the top \code{retrieve_k} candidates per EDAM type
+(topic, operation, data, format).
 }
 \examples{
 # Model mismatch is caught before any API call

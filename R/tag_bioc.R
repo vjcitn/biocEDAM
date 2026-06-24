@@ -18,7 +18,7 @@ bioc_line = function(pkgname = "tximeta") {
 #' EDAM terms
 #' @param pkgname character(1)
 #' @param url URL for representative content, in html or pdf
-#' @param provider character(1) LLM provider; see \code{\link{llm_env_var}}. Defaults to "openai".
+#' @param provider character(1) LLM provider; see \code{\link{llm_env_var}}. Defaults to "anthropic".
 #' @return a data.frame with biocViews and EDAM suggestions
 #' @examples
 #' if (interactive()) {

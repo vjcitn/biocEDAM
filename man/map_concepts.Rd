@@ -11,6 +11,7 @@ map_concepts(
   temperature = 0,
   extract_prompt = read_prompt("extract_concepts.txt"),
   lookup_prompt = read_prompt("lookup_concept.txt"),
+  confirm = interactive(),
   max_concepts = Inf,
   deduplicate = TRUE,
   definition = FALSE,
@@ -39,6 +40,12 @@ Defaults to \code{inst/prompts/extract_concepts.txt}.}
 
 \item{lookup_prompt}{character(1) prompt for Stage 2 (per-concept OLS4 lookup).
 Defaults to \code{inst/prompts/lookup_concept.txt}.}
+
+\item{confirm}{logical(1) if \code{TRUE} (the default in interactive sessions),
+Stage 1 concepts are printed and the user is prompted to confirm before Stage 2
+begins.  Entering nothing or \code{y} proceeds; anything else aborts and
+returns \code{NULL} invisibly.  Set to \code{FALSE} to skip the prompt in
+scripts and non-interactive contexts.}
 
 \item{max_concepts}{integer(1) maximum number of concepts to look up in
 Stage 2.  The first \code{max_concepts} items from Stage 1 are used;

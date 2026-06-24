@@ -48,15 +48,14 @@ llm_api_key <- function(provider) {
 #' @param model character(1) model identifier appropriate for the chosen provider
 #' @param \dots additional arguments passed to the underlying \code{chat_*} function
 #' @return an ellmer Chat object
-#' @note The \code{model} default in calling functions is typically an OpenAI model name.
-#' When using a different provider, supply an appropriate model name for that provider.
+#' @note Supply a model name appropriate for the chosen provider.
 #' @examples
 #' if (interactive() && nchar(Sys.getenv("ANTHROPIC_API_KEY")) > 0) {
 #'     ch <- llm_chat("anthropic", model = "claude-haiku-4-5")
 #'     ch$chat("Name one EDAM topic term.")
 #' }
 #' @export
-llm_chat <- function(provider = "openai", model, ...) {
+llm_chat <- function(provider = "anthropic", model, ...) {
   llm_api_key(provider)
   switch(provider,
     openai    = ellmer::chat_openai(model = model, ...),
